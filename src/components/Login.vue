@@ -10,13 +10,14 @@
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
-                <v-form ref="form" v-model="valid" @keyup.native.enter="submit">
+                <v-form ref="form">
                   <v-text-field
                     label="Correo electrónico / DNI"
                     color="#7ED957"
-                    name="login"
+                    name="username"
                     v-model="username"
                     type="username"
+                    v-on:keyup.enter="login"
                     flat
                   />
 
@@ -27,15 +28,29 @@
                     v-model="password"
                     color="#7ED957"
                     type="password"
+                    v-on:keyup.enter="login"
                     flat
                   />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="#7ED957" dark rounded @click="submit">Login</v-btn>
+                <v-btn
+                  color="#7ED957"
+                  dark
+                  rounded
+                  @click="login"
+                  value="login"
+                >
+                  <span v-if="!loading">Login</span>
+                </v-btn>
               </v-card-actions>
             </v-card>
+            <div class="mt-4">
+              <p v-if="error" class="error" align="center">
+                {{ msg }}
+              </p>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -44,23 +59,36 @@
 </template>
 
 <script>
+import auth from "../logic/Auth";
+
 export default {
   props: {
     source: String,
   },
   data() {
     return {
-      valid: false,
-      username: '',
-      password: '',
+      loading: false,
+      username: "",
+      password: "",
+      error: false,
+      msg: "",
     };
   },
   methods: {
-    submit() {
-      this.$store.dispatch('userLogin', {
-        username: this.username,
-        password: this.password,
-      });
+    async login() {
+      this.loading = true;
+      try {
+        const userData = {
+          DNI: this.username,
+          Password: this.password,
+        };
+        const response = await auth.login(userData);
+        this.msg = response
+        this.error = true
+      } catch (error) {
+        this.loading = false;
+        this.error = true;
+      }
     },
   },
 };

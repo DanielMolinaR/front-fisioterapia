@@ -38,7 +38,7 @@ export default {
             "https://images.unsplash.com/photo-1500061228850-950b0dc792c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
           title: "Mis citas",
           color: "#7ED957",
-          identification: "patient",
+          identification: this.identification,
           path: "draw",
         },
         {
@@ -54,7 +54,7 @@ export default {
             "https://images.unsplash.com/photo-1483861911361-57d334ad765b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3304&q=80",
           title: "Calendario",
           color: "#7ED957",
-          identification: "patient",
+          identification: this.identification,
           path: "data",
         },
         {
@@ -67,26 +67,26 @@ export default {
         },
         {
           src:
-            "https://images.unsplash.com/photo-1473976345543-9ffc928e648d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3370&q=80",
-          title: "Crear cita",
-          color: "#7ED957",
-          identification: "worker",
-          path: "data",
-        },
-        {
-          src:
             "https://images.unsplash.com/photo-1524272332618-3a94122bb0c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
           title: "Ver pacientes",
           color: "#7ED957",
-          identification: "worker",
+          identification: "employee",
           path: "",
+        },
+        {
+          src:
+            "https://images.unsplash.com/photo-1473976345543-9ffc928e648d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3370&q=80",
+          title: "Crear cita",
+          color: "#7ED957",
+          identification: "employee",
+          path: "data",
         },
         {
           src:
             "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3289&q=80",
           title: "Crear ejercicio",
           color: "#7ED957",
-          identification: "worker",
+          identification: "employee",
           path: "",
         },
         {
@@ -105,6 +105,7 @@ export default {
           identification: "admin",
           path: "",
         },
+        // ver trabajadores
       ],
     };
   },

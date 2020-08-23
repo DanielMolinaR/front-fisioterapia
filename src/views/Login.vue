@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopBar :username="this.username" />
+    <TopBar />
     <LoginCard/>
   </div>
 </template>
@@ -21,11 +21,6 @@ export default {
     return {
       username: "",
     };
-  },
-  mounted() {
-    this.username = this.$store.getters.getUserName;
-    this.username =
-      this.username.charAt(0).toUpperCase() + this.username.slice(1);
   },
 };
 </script>
