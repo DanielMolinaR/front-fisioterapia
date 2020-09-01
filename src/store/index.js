@@ -22,6 +22,7 @@ export default new Vuex.Store({
       commit("SET_USERID", userId);
       commit("SET_USERNAME", userName);
       commit("SET_TOKEN", token);
+      Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     },
     userLogout({ commit }) {
       commit("SET_USERID", "");
