@@ -27,9 +27,6 @@
 
 <script>
 export default {
-  props: {
-    level: Number,
-  },
   data() {
     return {
       cards: [
@@ -38,7 +35,7 @@ export default {
             "https://images.unsplash.com/photo-1500061228850-950b0dc792c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
           title: "Mis citas",
           color: "#7ED957",
-          identification: this.identification,
+          identification: "patient",
           path: "draw",
         },
         {
@@ -54,7 +51,7 @@ export default {
             "https://images.unsplash.com/photo-1483861911361-57d334ad765b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3304&q=80",
           title: "Calendario",
           color: "#7ED957",
-          identification: this.identification,
+          identification: "patient",
           path: "data",
         },
         {

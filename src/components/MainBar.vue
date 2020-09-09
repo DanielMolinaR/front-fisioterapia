@@ -17,7 +17,7 @@
         </template>
         <v-list two-line subheader>
           <v-list-item>
-            <v-list-item-title>Usuario: {{ this.username }}</v-list-item-title>
+            <v-list-item-title>Usuario: {{ username }}</v-list-item-title>
           </v-list-item>
           <v-list-item @click="logOut">
             <v-list-item-title>Cerrar Sesión</v-list-item-title>
@@ -30,8 +30,11 @@
 
 <script>
 export default {
-  props: {
-    username: String,
+
+  data() {
+    return {
+      username: this.$store.getters.getUserName,
+    }
   },
 
   methods: {
@@ -39,5 +42,6 @@ export default {
       this.$store.dispatch("userLogout");
     },
   },
+
 };
 </script>

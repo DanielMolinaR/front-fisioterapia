@@ -1,20 +1,39 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router";
+import Axios from "axios";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
+const getDefaultState = () => {
+  return {
     token: "",
     userId: "",
     userName: "",
+    dni: "",
+  }
+}
+
+export default new Vuex.Store({
+  state: getDefaultState(),
+
+  getters: {
+    isAuthenticated(state) {
+      return state.userId !== null && state.userId !== undefined;
+    },
+    getUserId(state) {
+      return state.userId;
+    },
+    getUserName(state) {
+      return state.userName;
+    },
   },
 
   mutations: {
     SET_USERID: (state, userId) => (state.userId = userId),
     SET_USERNAME: (state, userName) => (state.userName = userName),
     SET_TOKEN: (state, token) => (state.token = token),
+    SET_DEFAULT: (state) => (Object.assign(state, getDefaultState()))
   },
 
   actions: {
@@ -29,18 +48,6 @@ export default new Vuex.Store({
       commit("SET_USERNAME", "");
       commit("SET_TOKEN", "");
       router.push("/");
-    },
-  },
-
-  getters: {
-    isAuthenticated(state) {
-      return state.userId !== null && state.userId !== undefined;
-    },
-    getUserId(state) {
-      return state.userId;
-    },
-    getUserName(state) {
-      return state.userName;
     },
   },
 });

@@ -17,10 +17,5 @@ export default {
     LoginCard,
   },
 
-  data() {
-    return {
-      username: "",
-    };
-  },
 };
 </script>

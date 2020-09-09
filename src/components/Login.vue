@@ -42,7 +42,7 @@
                   @click="login"
                   value="login"
                 >
-                  <span v-if="!loading">Login</span>
+                  <span v-if="!loading">Iniciar sesión</span>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+
 import auth from "../logic/Auth";
 
 export default {
@@ -86,10 +87,10 @@ export default {
         this.msg = response.data.state
         if (response.data.state == "Sesión inicada"){
           const token = response.data.token;
-          const username = response.data.name;
+          const userName = response.data.userName;
           const userId = response.data.userId
           await this.$store
-            .dispatch("userLogin", { userId, username, token })
+            .dispatch("userLogin", { userId, userName, token })
             .then(() => this.$router.push("home"));
         } else {
           this.error = true
