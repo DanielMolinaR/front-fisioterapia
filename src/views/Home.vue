@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar :username="this.username" />
-    <Cards :levelProp="this.userId" />
+    <Cards/>
   </div>
 </template>
 
@@ -15,18 +15,6 @@ export default {
   components: {
     TopBar,
     Cards,
-  },
-
-  data() {
-    return {
-      userId: "",
-      username: "",
-    };
-  },
-  mounted() {
-    this.userId = this.$store.getters.getUserId;
-    this.username = this.$store.getters.getUserName;
-    this.username = this.username.charAt(0).toUpperCase() + this.username.slice(1);
   },
 };
 </script>
