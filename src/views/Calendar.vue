@@ -1,20 +1,20 @@
 <template>
   <div>
     <TopBar/>
-    <Card class="pa-16"></Card>
+    <Calendar class="px-10"/>
   </div>
 </template>
 
 <script>
 import TopBar from "../components/MainBar.vue";
-import Card from "../components/AppointmentsCard.vue"
+import Calendar from "../components/calendarComponent"
 
 export default {
-  name: "appointments",
+  name: "calendar",
 
   components: {
     TopBar,
-    Card
+    Calendar,
   },
 };
 </script>

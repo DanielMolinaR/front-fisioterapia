@@ -14,7 +14,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn :color="card.color" :dark=true
-            @click='$router.push({name: card.path})'>
+            @click='$router.push({name: card.path, params:{toSearch: card.info}})'>
             <span style="font-size: 90%">
               Entrar
               </span>
@@ -38,7 +38,8 @@ export default {
           title: "MIS CITAS",
           color: "#7ED957",
           level: 0, // patient level
-          path: "draw",
+          path: "appointments-exercise",
+          info: "appointments",
         },
         {
           src:
@@ -46,7 +47,8 @@ export default {
           title: "MIS EJERCICIOS",
           color: "#4793D7",
           level: 0,
-          path: "data",
+          path: "appointments-exercise",
+          info: "exercises",
         },
         {
           src:
@@ -54,7 +56,7 @@ export default {
           title: "CALENDARIO",
           color: "#7ED957",
           level: 0,
-          path: "data",
+          path: "calendar",
         },
         {
           src:

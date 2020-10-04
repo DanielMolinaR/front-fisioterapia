@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopBar :username="this.username" />
+    <TopBar />
     <Cards/>
   </div>
 </template>

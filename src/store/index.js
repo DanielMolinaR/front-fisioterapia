@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const getDefaultState = () => {
   return {
     token: "",
-    userLevel: -1,
+    userLevel: 2,
     userName: "",
   };
 };

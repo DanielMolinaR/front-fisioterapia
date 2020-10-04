@@ -16,9 +16,16 @@ const routes = [
     component: () => import ("../views/Home.vue"),
   },
   {
-    path: "/appointments",
-    name: "appointments",
-    component: () => import ("../views/Appointments.vue"),
+    path: "/appointments-exercise",
+    name: "appointments-exercise",
+    props: true,
+    component: () => import ("../views/Appointments-Exercise.vue"),
+  },
+  {
+    path: "/calendar",
+    name: "calendar",
+    props: true,
+    component: () => import ("../views/Calendar.vue"),
   },
 ];
 
