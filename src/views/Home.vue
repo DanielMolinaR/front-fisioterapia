@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-container>
     <TopBar />
     <Cards/>
-  </div>
+  </v-container>
 </template>
 
 <script>

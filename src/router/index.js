@@ -27,6 +27,12 @@ const routes = [
     props: true,
     component: () => import ("../views/Calendar.vue"),
   },
+  {
+    path: "/users",
+    name: "users",
+    props: true,
+    component: () => import ("../views/Users.vue"),
+  },
 ];
 
 const router = new VueRouter({

@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="11" sm="5" >
+    <v-col cols="12">
       <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
         :nudge-right="40" :return-value.sync="time" transition="scale-transition"
         offset-y max-width="290px" min-width="290px"
@@ -16,9 +16,6 @@
           color="#4793d7"
         ></v-time-picker>
       </v-menu>
-    </v-col>
-    <v-spacer></v-spacer>
-    <v-col cols="11" sm="5" >
     </v-col>
   </v-row>
 </template>

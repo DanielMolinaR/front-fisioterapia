@@ -72,7 +72,8 @@ export default {
           title: "VER PACIENTES",
           color: "#7ED957",
           level: 1, //employee level
-          path: "",
+          path: "users",
+          info: "patients",
         },
         {
           src:
@@ -80,7 +81,8 @@ export default {
           title: "VER TRABAJADORES", //crear trabajador
           color: "#4793D7",
           level: 2,
-          path: "",
+          path: "users",
+          info: "employees",
         },
       ],
     };

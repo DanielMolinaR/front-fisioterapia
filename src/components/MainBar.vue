@@ -1,5 +1,5 @@
 <template>
-  <v-content style="margin: 30px; font-family: Economica">
+  <v-container style="margin: 30px; font-family: Economica">
     <v-app-bar color="#fafafa" fixed>
       <v-btn icon v-on="on" @click="$router.push('/home')">
         <v-icon color="#000000">mdi-home-outline</v-icon>
@@ -16,8 +16,8 @@
           </v-btn>
         </template>
         <v-list two-line subheader>
-          <v-list-item>
-            <v-list-item-title>Usuario: {{ username }}</v-list-item-title>
+          <v-list-item @click="profile">
+            <v-list-item-title>Mi perfil</v-list-item-title>
           </v-list-item>
           <v-list-item @click="logOut">
             <v-list-item-title>Cerrar Sesión</v-list-item-title>
@@ -25,7 +25,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-  </v-content>
+  </v-container>
 </template>
 
 <script>
@@ -33,7 +33,7 @@ export default {
 
   data() {
     return {
-      username: this.$store.getters.getUserName,
+      on: '',
     }
   },
 
@@ -41,6 +41,9 @@ export default {
     logOut() {
       this.$store.dispatch("userLogout");
     },
+    profile() {
+
+    }
   },
 
 };

@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const getDefaultState = () => {
   return {
     token: "",
-    userLevel: 2,
+    userLevel: 0,
     userName: "",
   };
 };
@@ -40,7 +40,6 @@ export default new Vuex.Store({
     userLogin({ commit }, { userLevel, userName, token }) {
       commit("SET_USERLEVEL", userLevel);
       commit("SET_USERNAME", userName);
-      commit("SET_TOKEN", token);
       Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     },
     userLogout({ commit }) {
