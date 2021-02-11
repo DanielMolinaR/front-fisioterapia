@@ -7,7 +7,7 @@
             class="white--text align-end"
             height="200px"
             :src="card.src"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
           >
             <v-card-title v-text="card.title" style="font-family: Economica"></v-card-title>
           </v-img>
@@ -34,18 +34,18 @@ export default {
       cards: [
         {
           src:
-            require('../assets/images/mis_citas5.jpg'),
+          require('../assets/images/mis_citas5.jpg'),
           title: "MIS CITAS",
-          color: "#7ED957",
+          color: "#F5914D",
           level: 0, // patient level
           path: "appointments-exercise",
           info: "appointments",
         },
         {
           src:
-            require('../assets/images/mis_ejercicios.jpg'),
+          require('../assets/images/mis_ejercicios.jpg'),
           title: "MIS EJERCICIOS",
-          color: "#4793D7",
+          color: "#F5914D",
           level: 0,
           path: "appointments-exercise",
           info: "exercises",
@@ -54,23 +54,15 @@ export default {
           src:
           require('../assets/images/calendario3.jpg'),
           title: "CALENDARIO",
-          color: "#7ED957",
+          color: "#F5914D",
           level: 0,
           path: "calendar",
         },
         {
           src:
-            require('../assets/images/historial_clinico2.jpg'),
-          title: "HISTORIAL CLÍNICO",
-          color: "#4793D7",
-          level: 1,
-          path: "data",
-        },
-        {
-          src:
             require('../assets/images/ver_pacientes1.jpg'),
           title: "VER PACIENTES",
-          color: "#7ED957",
+          color: "#F5914D",
           level: 1, //employee level
           path: "users",
           info: "patients",
@@ -79,17 +71,13 @@ export default {
           src:
             require('../assets/images/ver_trabajadores.jpg'),
           title: "VER TRABAJADORES", //crear trabajador
-          color: "#4793D7",
+          color: "#F5914D",
           level: 2,
           path: "users",
           info: "employees",
         },
       ],
     };
-  },
-  beforeMount() {
-    const level = this.$store.getters.getUserLevel;
-    this.cards = this.cards.filter((el) => el.level <= level);
   },
 };
 </script>

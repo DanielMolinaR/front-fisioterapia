@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row align="left" justify="left">
-            <v-col cols="12" lg="6" class="ml-n4">
+            <v-col cols="12" lg="12" class="ml-n4">
                 <v-menu
                 v-model="menu"
                 :close-on-content-click="false"
@@ -19,12 +19,16 @@
                     readonly
                     v-bind="attrs"
                     v-on="on"
+                    color="#F5914D"
+                    :rules="rule"
                     ></v-text-field>
                 </template>
                 <v-date-picker
                     v-model="date"
                     no-title
                     @input="menu = false"
+                    color="#F5914D"
+                    @change="setDate"
                 ></v-date-picker>
                 </v-menu>
             </v-col>
@@ -34,6 +38,11 @@
 
 <script>
   export default {
+
+    props: {
+      rule: Array
+    },
+
     data: vm => ({
       date: new Date().toISOString().substr(0, 10),
       dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
@@ -41,7 +50,7 @@
     }),
 
     computed: {
-      computedDateFormatted () {
+      computedDateFormatted : function() {
         return this.formatDate(this.date)
       },
     },
@@ -53,6 +62,9 @@
         const [year, month, day] = date.split('-')
         return `${month}/${day}/${year}`
       },
+      setDate () {
+          this.$emit("changeDate", this.computedDateFormatted)
+      }
     },
   }
 </script>

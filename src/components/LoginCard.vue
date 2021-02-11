@@ -4,15 +4,15 @@
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12">
-            <v-toolbar color="#7ED957" dark flat>
+            <v-toolbar color="#2B2A29" dark flat>
               <v-toolbar-title>Inicio de sesión</v-toolbar-title>
               <v-spacer />
             </v-toolbar>
             <v-card-text>
               <v-form ref="form">
                 <v-text-field
-                  label="Correo electrónico / DNI"
-                  color="#7ED957"
+                  label="DNI / NIF"
+                  color="#2B2A29"
                   name="username"
                   v-model="username"
                   type="username"
@@ -22,20 +22,23 @@
 
                 <v-text-field
                   id="password"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   label="Contraseña"
                   name="password"
                   v-model="password"
-                  color="#7ED957"
-                  type="password"
+                  :type="showPassword ? 'text' : 'password'"
+                  color="##B2A29"
+                  @click:append="showPassword = !showPassword"
                   v-on:keyup.enter="login"
                   flat
                 />
               </v-form>
             </v-card-text>
             <v-card-actions>
+              <a href="/sign-up" class="text-decoration-none">Si aún no tienes una cuenta</a>
               <v-spacer />
               <v-btn
-                color="#7ED957"
+                color="#2B2A29"
                 dark
                 rounded
                 @click="login"
@@ -65,6 +68,7 @@ export default {
   },
   data() {
     return {
+      showPassword: false,
       loading: false,
       username: "",
       password: "",
@@ -76,28 +80,29 @@ export default {
     async login() {
       this.loading = true;
       try {
-        /*const userData = {
+        let userData = {
           DNI: this.username,
           password: this.password,
-        };*/
-        const response = await auth.getAdminToken();
+        };
+        let response = await auth.loginBack(userData);
         console.log(response)
-        this.msg = response.data.state;
-        this.error = true;
-        /*if (this.msg == "Sesión inicada") {
-          const token = "response.data.token";
-          const userName = response.data.userName;
-          const userLevel = response.data.userLevel;
-          await this.$store
-            .dispatch("userLogin", { userLevel, userName, token })
-            .then(() => this.$router.push("home"));
-        } else if (this.msg == "Sesión iniciada por token") {
-          this.$router.push("home");
-        } else {
-          this.error = true;
-          this.loading = false;
-        }*/
+        if (response.data.state == "Sesión iniciada") {
+            console.log("usuario y contraseña")
+            let token = response.data.accessToken;
+            let refreshToken = response.data.refreshToken;
+            let userName = response.data.userName;
+            let userLevel = response.data.role;
+            let email = response.data.email
+            await this.$store
+              .dispatch("userLogin", { userLevel, userName, token, refreshToken, email })
+              .then(() => this.$router.push("home"));
+          } else if (response.data.state == "Sesión iniciada gracias al token") {
+            console.log("token")
+            this.$router.push("home");
+          } 
       } catch (error) {
+        console.log(error.response)
+        this.msg = error.response.data.state
         this.loading = false;
         this.error = true;
       }

@@ -79,7 +79,7 @@
       <v-col>
         <v-card>
             <v-fab-transition>
-            <v-btn v-show="!hidden" color="#7ED957" dark absolute
+            <v-btn v-show="!hidden" color="#F5914D" dark absolute
               top right fab @click="dialog = !dialog"
             >
               <v-icon>mdi-plus</v-icon>
@@ -108,7 +108,7 @@ import CreateAppointment from "../components/CreateAppointment"
       show: false,
       dialog: false,
       focus: '',
-      type: 'month',
+      type: 'week',
       typeToLabel: {
         month: 'Month',
         week: 'Week',

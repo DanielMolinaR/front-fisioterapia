@@ -6,8 +6,13 @@
       </v-btn>
       <v-spacer />
       <v-toolbar-title class="black--text"
-        style="font-size: 25px">FISIOTERAPIA <span style="color: #4793d7"> MOVIMIENTO </span><span style="color: #7ED957"> Y SALUD</span></v-toolbar-title
-      >
+        style="font-size: 25px">
+        <v-img 
+          src= '../assets/images/logo-letras-en-linea.png'
+            max-width= "400px"
+            max-height="160px"
+        ></v-img>
+      </v-toolbar-title>
       <v-spacer />
       <v-menu center offset-y>
         <template v-slot:activator="{ on }">

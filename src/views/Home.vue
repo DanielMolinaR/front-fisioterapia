@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <TopBar />
-    <Cards/>
+    <Cards />
   </v-container>
 </template>
 
 <script>
-import TopBar from "../components/MainBar.vue";
+import TopBar from "../components/MainTopBar.vue";
 import Cards from "../components/HomeCards.vue";
 
 export default {
@@ -16,5 +16,6 @@ export default {
     TopBar,
     Cards,
   },
+
 };
 </script>

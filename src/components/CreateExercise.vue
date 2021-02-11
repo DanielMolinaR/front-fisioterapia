@@ -1,66 +1,194 @@
-<template> 
-    <v-card>
-    <v-card-text>
-        <v-text-field :rules="emailRules" label="Correo electrónico del paciente" color="#4793d7" 
-        class="pt-5"></v-text-field>
-        <v-text-field :rules="phoneRules" label="Número de telefono del paciente" color="#4793d7" 
-        class="pt-5" v-if="this.switch1 == true"></v-text-field>
-        <v-text-field :rules="notEmpty" label="Nombre del paciente" color="#4793d7" 
-        class="pt-5" v-if="this.switch1 == true"></v-text-field>
-        <v-text-field :rules="emailRules" label="Correo electrónico del fisioterapeuta" 
-        v-if="this.$store.getters.getUserLevel == 2" class="pt-5"></v-text-field>
-        <DatePicker class="mt-n4"/>
-        <TimePicker class="mt-n10 mb-n3 ml-n4"/>
-          <v-col cols="12" md="6" lg="6" xl="6" sm="8">
-            <v-textarea label="Descripción del ejercicio" color="#4793d7" outlined full-width>
-              <template v-slot:label>
-                <div>
-                  Descripción del ejercicio <small>(opcional)</small>
-                </div>
+<template>
+  <v-card flat>
+    <v-snackbar
+      v-model="snackbar"
+      absolute
+      top
+      right
+      :color="this.color"
+    >
+      <span>{{ answer }}</span>
+      <v-icon dark>
+        mdi-checkbox-marked-circle
+      </v-icon>
+    </v-snackbar>
+    <v-form
+      ref="form"
+      @submit.prevent="submit"
+    >
+      <v-container fluid>
+        <v-row>
+            <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+            v-model="form.email"
+              :rules="rules.email"
+              color="#F5914D"
+              label="Correo electrónico del paciente"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+              v-model="form.name"
+              :rules="rules.name"
+              color="#F5914D"
+              label="Nombre del ejercicio"
+              name="name"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-textarea
+              v-model="form.description"
+              color="#F5914D"
+              label="Descripción del ejercicio"
+              outlined
+              full-width
+            >
+                <template v-slot:label>
+                    <div>
+                    Descripción del ejercicio <small>(opcional)</small>
+                    </div>
               </template>
             </v-textarea>
           </v-col>
-    </v-card-text>
-    <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="#4793d7" @click="dialog = false" dark>
-            Crear ejercicio
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <DatePicker class="mt-n6"
+                v-model="form.date"
+                :rule="rules.date"
+                @changeDate="setDate"
+            />
+          </v-col>
+            <v-col
+            cols="12"
+            sm="6"
+          >
+            <TimePicker 
+                v-model="form.hour"
+                @changeHour="setHour"
+            
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-card-actions>
+        <v-btn
+          text
+          @click="resetForm"
+        >
+          Cancelar
         </v-btn>
-    </v-card-actions>
-    </v-card>
-</template> 
+        <v-spacer></v-spacer>
+        <v-btn
+          :disabled="!formIsValid"
+          text
+          color="#F5914D"
+          type="submit"
+        >
+          Crear Ejercicio
+        </v-btn>
+      </v-card-actions>
+    </v-form>
+  </v-card>
+</template>
 
 <script>
+
 import DatePicker from "../components/DatePicker"
 import TimePicker from "../components/TimePicker"
 
     export default {
-        name: "createAppointments",
+        name: "patientSignUpData",
 
         components: {
             DatePicker,
-            TimePicker,
+            TimePicker
         },
 
-        data: () =>({
-            newUser: false,
-            switch1: false,
-            emailRules: [
-                value => !!value || 'Campo obligatorio.',
+
+    data () {
+      const defaultForm = Object.freeze({
+        name: '',
+        patientEmail: '',
+        date: null,
+        hour: null,
+      })
+
+      return {
+        form: Object.assign({}, defaultForm),
+        rules: {
+            notEmpty: [val => (val || '').length > 0 || 'Campo obligatorio'],
+            email: [
+                value => (value || '').length > 0 || 'Campo obligatorio.',
                 value => {
                 const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 return pattern.test(value) || 'correo electrónico erróneo.'
                 },
             ],
-            notEmpty: [
-                value => !!value || 'Campo obligatorio.',
+            date: [
+                value => {
+                    let minimunDate = new Date()
+                    var dateOfExercise = Date.parse(value)
+                    return (dateOfExercise > minimunDate) || "Fecha no válida."
+                }
             ],
-            phoneRules: [
-                value => !!value || 'Campo obligatorio.',
-                value => (value || '').length == 9 || 'Telefono no válido',
-            ]
-        }),
+        },
+        snackbar: false,
+        defaultForm,
+        answer: "",
+        color: "",
+      }
+    },
 
-    }
+    computed: {
+      formIsValid () {
+        return (
+          this.form.name &&
+          this.checkEmail() &&
+          this.checkDate() &&
+          this.form.hour
+        )
+      },
+    },
 
+    methods: {
+      resetForm () {
+        this.form = Object.assign({}, this.defaultForm)
+        this.$refs.form.reset()
+      },
+      submit () {
+        this.color = "success"
+        this.answer = "Ejercicio creado correctamente."
+        this.snackbar = true
+        this.resetForm()
+      },
+      checkDate() {
+        let minimunDate = new Date()
+        var dateOfExercise = Date.parse(this.form.date)
+        return dateOfExercise > minimunDate
+      },
+      checkEmail() {
+        let pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return pattern.test(this.form.email)
+      },
+      setDate(value) {
+          this.form.date = value
+      },
+      setHour(value) {
+          this.form.hour = value
+      },
+    },
+  }
 </script>

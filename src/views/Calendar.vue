@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TopBar from "../components/MainBar.vue";
+import TopBar from "../components/MainTopBar.vue";
 import Calendar from "../components/calendarComponent"
 
 export default {
