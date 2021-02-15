@@ -93,6 +93,7 @@ export default {
             let userName = response.data.userName;
             let userLevel = response.data.role;
             let email = response.data.email
+            console.log(refreshToken)
             await this.$store
               .dispatch("userLogin", { userLevel, userName, token, refreshToken, email })
               .then(() => this.$router.push("home"));

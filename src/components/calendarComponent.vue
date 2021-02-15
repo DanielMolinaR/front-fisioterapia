@@ -175,6 +175,14 @@ import CreateAppointment from "../components/CreateAppointment"
           const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
           const second = new Date(first.getTime() + secondTimestamp)
 
+
+          //he de crear dos objetos de tipo Date, uno con el inicio y otro con el fin
+          //seguidamente si es administrador los nombres de los empleado los almaceno en una
+          //lista de tipo (key, value) donde la key es el nombre y el value su color, si no es
+          //administrador directamente diferencio entre citas y ejercicios, 2 colores
+          //para buscar el color del empleado, busco en la lista, si no existe el empleado en ella
+          //se introduce por primera vez y se asigna un color aleatorio del array de colores y se elimina del array
+
           events.push({
             name: this.names[this.rnd(0, this.names.length - 1)],
             start: first,

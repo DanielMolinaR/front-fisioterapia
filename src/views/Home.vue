@@ -17,5 +17,9 @@ export default {
     Cards,
   },
 
+  async beforeMount(){
+    console.log("Se ha guardado el refresh token: " + this.$store.getters.getRefreshToken)
+  }
+
 };
 </script>

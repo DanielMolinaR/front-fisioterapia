@@ -14,21 +14,9 @@
         ></v-img>
       </v-toolbar-title>
       <v-spacer />
-      <v-menu center offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon color="#000000">mdi-account-circle</v-icon>
-          </v-btn>
-        </template>
-        <v-list two-line subheader>
-          <v-list-item @click="profile">
-            <v-list-item-title>Mi perfil</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="logOut">
-            <v-list-item-title>Cerrar Sesión</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <v-btn icon v-on="on">
+        <v-icon color="#000000" @click="logOut">mdi-logout</v-icon>
+      </v-btn>
     </v-app-bar>
   </v-container>
 </template>

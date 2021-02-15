@@ -38,6 +38,12 @@ const routes = [
     props: true,
     component: () => import ("../views/Users.vue"),
   },
+  {
+    path: "/error",
+    name: "error",
+    props: true,
+    component: () => import ("../views/Error.vue"),
+  },
 ];
 
 const router = new VueRouter({

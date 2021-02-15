@@ -37,7 +37,7 @@ export default {
       } 
     }
 
-    this.state = await this.$store.getters.getParam
+    this.state = this.$store.getters.getParam
     console.log("Padre: " + this.state)
     this.userLevel = this.$store.getters.getUserLevel
   },

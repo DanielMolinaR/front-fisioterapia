@@ -15,7 +15,7 @@
 
         <v-card-actions>
 
-        <v-btn color="red accent-2" :dark= true>
+        <v-btn color="red accent-2" :dark= true @click="dialog = !dialog">
             Cancelar cita
         </v-btn>
 
@@ -34,6 +34,29 @@
             </v-card-text>
         </div>
         </v-expand-transition>
+        <v-dialog v-model="dialog" max-width="500px">
+            <template>
+                <v-card flat>
+                    <v-container fluid>
+                        <v-row justify="center">
+                            <v-col cols="12" align-self="end">
+                                <p>¿Estás seguro que quieres cancelar esta cita?</p>
+                            </v-col>
+                            <v-col cols="6" align-self="end">
+                                <v-btn color="red accent-2" :dark= true @click="dialog = !dialog">
+                                    NO
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="6" align-self="center">
+                                <v-btn color="red accent-2" :dark= true @click="deleteAppointment">
+                                    SÍ
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </template>
+        </v-dialog>
     </v-card>
 </template>
 
@@ -50,7 +73,14 @@
 
         data: () => ({
             show: false,
-        })
+            dialog: false,
+        }),
+
+        methods: {
+            deleteAppointment(){
+
+            }
+        }
 
     }
 

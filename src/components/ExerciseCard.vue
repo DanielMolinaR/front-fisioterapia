@@ -14,21 +14,14 @@
         </v-card-subtitle>
 
         <v-card-actions>
-            <v-row>
-                <v-col cols="12" md="12" lg="12" xl="6" sm="12" >
-                    <v-btn color="#4793d7" :dark= true>
-                        Posponer ejercicio
-                    </v-btn>
-                </v-col>
-                
-                <v-col cols="12" md="12" lg="12" xl="6" sm="12">
-                    <v-btn color="red accent-2" :dark= true>
+            <v-row>                
+                <v-col cols="12" md="12" lg="12" xl="12" sm="12">
+                    <v-btn color="red accent-2" :dark= true @click="dialog = !dialog">
                         Cancelar ejercicio
                     </v-btn>
                 </v-col>
             </v-row>
         <v-spacer/>
-
         <v-btn icon @click="show = !show" >
             <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
         </v-btn>
@@ -42,13 +35,35 @@
             </v-card-text>
         </div>
         </v-expand-transition>
+        <v-dialog v-model="dialog" max-width="500px">
+            <template>
+                <v-card flat>
+                    <v-container fluid>
+                        <v-row>
+                            <v-col cols="12">
+                                <p>¿Estás seguro que quieres cancelar este ejercicio?</p>
+                            </v-col>
+                            <v-col cols="6">
+                                <v-btn color="red accent-2" :dark= true @click="dialog = !dialog">
+                                    NO
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="6">
+                                <v-btn color="red accent-2" :dark= true @click="deleteExercise">
+                                    SÍ
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </template>
+        </v-dialog>
     </v-card>
 </template>
 
 <script>
-
     export default {
-    
+
         props: {
             title: String,
             date: String,
@@ -58,8 +73,14 @@
 
         data:() => ({
             show: false,
-        })
+            dialog: false,
+        }),
 
+        methods: {
+            deleteExercise() {
+                
+            }
+        }
 
     }
 

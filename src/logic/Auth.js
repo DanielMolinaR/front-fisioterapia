@@ -18,6 +18,17 @@ export default {
 
   getCards(route){
     return axios.get(ENDPOINT_PATH + "/" + route).then(res => res)
+  },
+
+  getUsers(route){
+    return axios.get(ENDPOINT_PATH + "/" + route).then(res => res)
+  },
+
+  getNewPairOfTokens(refreshToken){
+    console.log("entra")
+    axios.defaults.headers.common["Authorization"] = `Bearer ` + refreshToken;
+    console.log("llega")
+    return axios.get(ENDPOINT_PATH + "/refresh-token").then(res => res)
   }
 
 };

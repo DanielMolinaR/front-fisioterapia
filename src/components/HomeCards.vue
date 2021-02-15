@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row align="center" justify="center">
       <v-col v-for="card in cards" :key="card.title" :cols="12" sm="6" md="4">
-        <v-card>
+        <v-card >
           <v-img
             class="white--text align-end"
             height="200px"
@@ -79,5 +79,11 @@ export default {
       ],
     };
   },
+
+  beforeMount() {
+    const level = this.$store.getters.getUserLevel;
+    this.cards = this.cards.filter((el) => el.level <= level);
+  },
+
 };
 </script>
