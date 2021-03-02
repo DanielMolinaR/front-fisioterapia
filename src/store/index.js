@@ -10,7 +10,7 @@ const getDefaultState = () => {
   return {
     token: "",
     refreshToken: "hay algo",
-    userLevel: 0,
+    userLevel: -1,
     userName: "",
     param: "",
     email: "",
@@ -60,7 +60,7 @@ export default new Vuex.Store({
       commit("SET_USERNAME", userName);
       commit("SET_REFRESHTOKEN", refreshToken);
       commit("SET_EMAIL", email);
-      commit("SET_TOKEN", token);
+
       Axios.defaults.headers.common["Authorization"] = `Bearer ` + token;
     },
     userLogout({ commit }) {
@@ -72,12 +72,10 @@ export default new Vuex.Store({
     changeParam ({commit}, {param}) {
       commit("SET_PARAM", param);
     },
-    tokensChange({ commit }, { token, refreshToken }) {
+    tokensChange({ commit }, { accessToken, refreshToken }) {
       commit("SET_REFRESHTOKEN", refreshToken);
-      commit("SET_TOKEN", token);
-      Axios.defaults.headers.common["Authorization"] = `Bearer ` + token;
-      console.log("Cambiamos los token");
-      console.log("Se ha cambiado: " + refreshToken);
+
+      Axios.defaults.headers.common["Authorization"] = `Bearer ` + accessToken;
     },
   },
 });

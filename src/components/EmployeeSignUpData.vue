@@ -20,7 +20,7 @@
         <v-row>
             <v-col
             cols="12"
-            sm="12"
+            sm="6"
           >
             <v-text-field
               v-model="form.dni"
@@ -55,6 +55,18 @@
               required
             ></v-text-field>
           </v-col>
+            <v-col
+            cols="12"
+            sm="6"
+          >
+            <v-text-field
+              v-model="form.phone"
+              :rules="rules.phone"
+              color="#F5914D"
+              label="Número de teléfono"
+              required
+            ></v-text-field>
+          </v-col>
           <v-col
             cols="12"
             sm="6"
@@ -78,29 +90,6 @@
               label="Confirmar correo electrónico"
               required
             ></v-text-field>
-          </v-col>
-                              <v-col
-            cols="12"
-            sm="6"
-          >
-            <v-text-field
-              v-model="form.phone"
-              :rules="rules.phone"
-              color="#F5914D"
-              label="Número de teléfono"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col
-            cols="12"
-            sm="6"
-          >
-            <DatePicker class="mt-n6"
-                v-model="form.birthdate"
-                :rule="rules.birthdate"
-                @changeDate="setDate"
-                
-            />
           </v-col>
             <v-col
             cols="12"
@@ -222,15 +211,8 @@ No se producirán transferencias internacionales.
 </template>
 
 <script>
-
-import DatePicker from "../components/BirthDayPicker"
-
     export default {
-        name: "PatientSignUpData",
-
-        components: {
-            DatePicker,
-        },
+        name: "EmployeeSignUpData",
 
 
     data () {
@@ -280,13 +262,6 @@ import DatePicker from "../components/BirthDayPicker"
                     return pattern.test(value) || 'El DNI no tiene un formato correcto.'
                 }
             ],
-            birthdate: [
-                value => {
-                    let minimunYear = new Date().getFullYear() - 10
-                    var res = value.substring(6, 10);
-                    return (parseInt(res) < minimunYear) || "Fecha de nacimiento no válida."
-                }
-            ],
             passwordMatch: [
                 value => {
                     return value === this.form.password || 'Las contraseñas no coinciden.'
@@ -315,7 +290,6 @@ import DatePicker from "../components/BirthDayPicker"
           this.checkEmail() &&
           this.checkPassword() &&
           this.checkEmail &&
-          this.checkDate() &&
           this.form.confirmEmail===this.form.email &&
           this.form.confirmPassword===this.form.password &&
           this.form.terms
@@ -339,11 +313,6 @@ import DatePicker from "../components/BirthDayPicker"
         let pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
         return pattern.test(this.form.password)
       },
-      checkDate() {
-        let minimunYear = new Date().getFullYear() - 10
-        var res = this.form.birthdate.substring(6, 10);
-        return parseInt(res) < minimunYear
-      },
       checkEmail() {
         let pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return pattern.test(this.form.email)
@@ -356,9 +325,6 @@ import DatePicker from "../components/BirthDayPicker"
         let pattern = /^[679]{1}[0-9]{8}$/
         return pattern.test(this.form.phone)
       },
-      setDate(value) {
-          this.form.birthdate = value
-      }
     },
   }
 </script>

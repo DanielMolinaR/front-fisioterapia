@@ -1,5 +1,5 @@
 <template>
-  <v-container style="margin: 30px; font-family: Economica">
+  <v-container style="font-family: Economica">
     <v-app-bar color="#fafafa" fixed>
       <v-btn icon v-on="on" @click="$router.push('/home')">
         <v-icon color="#000000">mdi-home-outline</v-icon>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <TopBar/>
-    <Card class="pa-16" :state="this.state" :user_level="this.userLevel"></Card>
+    <Card class="pa-16" :state="state" :user_level="userLevel"></Card>
   </v-container>
 </template>
 
@@ -38,7 +38,6 @@ export default {
     }
 
     this.state = this.$store.getters.getParam
-    console.log("Padre: " + this.state)
     this.userLevel = this.$store.getters.getUserLevel
   },
 };

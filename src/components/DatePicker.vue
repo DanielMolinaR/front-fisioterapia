@@ -29,6 +29,7 @@
                     @input="menu = false"
                     color="#F5914D"
                     @change="setDate"
+                    :weekday-format="getDay"
                 ></v-date-picker>
                 </v-menu>
             </v-col>
@@ -47,6 +48,7 @@
       date: new Date().toISOString().substr(0, 10),
       dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
       menu: false,
+      daysOfWeek: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
     }),
 
     computed: {
@@ -64,7 +66,11 @@
       },
       setDate () {
           this.$emit("changeDate", this.computedDateFormatted)
-      }
+      },
+      getDay(date){
+        let i = new Date(date).getDay(date)
+        return this.daysOfWeek[i]
+      },
     },
   }
 </script>

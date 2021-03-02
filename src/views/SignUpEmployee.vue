@@ -7,10 +7,10 @@
 
 <script>
 import TopBar from "../components/SimpleTopBar.vue";
-import signUpData from "../components/PatientSignUpData.vue";
+import signUpData from "../components/EmployeeSignUpData.vue";
 
 export default {
-  name: "signUp",
+  name: "eSignUp",
 
   components: {
     TopBar,

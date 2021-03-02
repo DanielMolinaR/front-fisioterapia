@@ -85,24 +85,19 @@ export default {
           password: this.password,
         };
         let response = await auth.loginBack(userData);
-        console.log(response)
         if (response.data.state == "Sesión iniciada") {
-            console.log("usuario y contraseña")
             let token = response.data.accessToken;
             let refreshToken = response.data.refreshToken;
             let userName = response.data.userName;
             let userLevel = response.data.role;
             let email = response.data.email
-            console.log(refreshToken)
             await this.$store
               .dispatch("userLogin", { userLevel, userName, token, refreshToken, email })
               .then(() => this.$router.push("home"));
           } else if (response.data.state == "Sesión iniciada gracias al token") {
-            console.log("token")
             this.$router.push("home");
           } 
       } catch (error) {
-        console.log(error.response)
         this.msg = error.response.data.state
         this.loading = false;
         this.error = true;

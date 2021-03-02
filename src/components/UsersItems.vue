@@ -24,7 +24,7 @@
                     </v-col>
                 </v-row>
             </v-expansion-panel-header>
-            <div v-if="this.state === 'patients'">
+            <div v-if="this.$props.condition === 'patients'">
                 <v-expansion-panel-content class="pt-1" >
                 <v-row align="center" justify="center"> 
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
@@ -50,7 +50,7 @@
                     </v-col>
                 </v-row>
             </v-expansion-panel-content></div>
-            <div v-else-if="this.state === 'employees'">
+            <div v-else-if="this.$props.condition === 'employees'">
                 <v-expansion-panel-content class="pt-1" >
                 <v-row align="center" justify="center"> 
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
@@ -87,19 +87,10 @@
 export default {
 
     props: {
+        condition: String,
         name: String,
         email: String,
     },  
-
-    data() {
-        return {
-            state: "",
-        }
-    },
-
-    async beforeMount(){
-        this.state = this.$store.getters.getParam
-    }
 
 };
 </script>

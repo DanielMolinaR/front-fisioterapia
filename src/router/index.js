@@ -44,6 +44,18 @@ const routes = [
     props: true,
     component: () => import ("../views/Error.vue"),
   },
+  {
+    path: "/email-verification/:slug",
+    name: "email-verification",
+    props: true,
+    component: () => import ("../views/EmailVerification.vue"),
+  },
+  {
+    path: "/esign-up/:slug",
+    name: "eSignUp",
+    props: true,
+    component: () => import ("../views/SignUpEmployee.vue"),
+  },
 ];
 
 const router = new VueRouter({

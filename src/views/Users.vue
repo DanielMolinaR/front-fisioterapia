@@ -7,7 +7,7 @@
         <p style="font-family: Economica; font-size: 40px" v-if="this.state === 'employees'">Empleados:</p>
       </v-col>
       <v-col cols="6" sm="6" md="6" lg="6" xl="6"
-        v-if="this.userLevel > 1 && this.state == 'employees'">
+        v-if="this.userLevel === 2 && this.state == 'employees'">
         <v-card>
             <v-fab-transition>
             <v-btn color="#F5914D" dark absolute
@@ -24,7 +24,7 @@
     </v-dialog>
     <v-row class="pt-4">
       <v-col v-for="user in this.users" :key="user.name" cols="12">
-        <Users class="px-10 " :name="user.name" :email="user.email"/> 
+        <Users class="px-10 " :condition="state" :name="user.name" :email="user.email"/> 
       </v-col>
     </v-row>
   </v-container>
@@ -57,8 +57,31 @@ export default {
     }
   },
 
-  methods: {
-    async getData(route){
+  async created(){
+    if (Object.keys(this.$route.params).length !== 0){
+      if (this.route.includes("patients")){
+        let param = "patients"
+        await this.$store.dispatch("changeParam", {param})
+      } else if (this.route.includes("employees")){
+        let param = "employees"
+        await this.$store.dispatch("changeParam", {param})
+      } 
+    };
+
+    this.state = this.$store.getters.getParam;
+    this.userLevel = this.$store.getters.getUserLevel
+
+    let route = ""
+    if (this.state === "employees"){
+      route = "get-all-employees"
+    } else if (this.state === "patients"){
+      route = "get-all-patients"
+    }
+    this.getUsersData(route)
+  },
+
+    methods: {
+    async getUsersData(route){
       try {
         let response = await auth.getCards(route);
 
@@ -70,49 +93,29 @@ export default {
           this.users.push(dataToShow)
         }
       } catch (error) {
-        console.log(error.response)
         if (error.response.data.state === "Token no valido"){
-          console.log("token no valido")
-          try{
-            let tokenResponse = await auth.getNewPairOfTokens()
-            console.log(tokenResponse)
-            let accessToken = tokenResponse.data.accessToken
-            let refreshToken = tokenResponse.data.refreshToken
-            await this.$store
-                .dispatch("tokensChange", { accessToken, refreshToken })
-                .then(() => this.$router.push({name: "users", params:{toSearch: this.state}}));
-          } catch (error){
-            this.$store.dispatch("userLogout");
-          }
+          await this.changeTokens()
         } else {
-          console.log(error.response)
+          this.$router.push({name: "error", params:{error: error.response.data.state}});
         }
+      }
+    },
+    
+    async changeTokens(){
+      try{
+        let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
+
+        let accessToken = response.data.accessToken
+        let refreshToken = response.data.refreshToken
+
+        await this.$store
+            .dispatch("tokensChange", { accessToken, refreshToken })
+            .then(() => this.getUsersData());
+      } catch (error){
+        this.$store.dispatch("userLogout");
       }
     }
   },
-
-  async beforeMount(){
-    if (Object.keys(this.$route.params).length !== 0){
-      if (this.route.includes("patients")){
-        let param = "patients"
-        await this.$store.dispatch("changeParam", {param})
-      } else if (this.route.includes("employees")){
-        let param = "employees"
-        await this.$store.dispatch("changeParam", {param})
-      } 
-    }
-
-    this.state = this.$store.getters.getParam
-    this.userLevel = this.$store.getters.getUserLevel
-
-    let route = ""
-    if (this.state === "employees"){
-      route = "get-all-employees"
-    } else if (this.state === "patients"){
-      route = "get-all-patients"
-    }
-    this.getData(route)
-  }
 
 
 };

@@ -70,18 +70,18 @@ export default {
     return {
         dialog: false,
         toggle_exclusive: undefined,
-        secondRoute: "",
         condition: "",
         Acards: [],
-        Ecards: [
-          {
-            title: "Prueba",
-            date: "12/09/2021",
-            hour: "12:00",
-            details: "nepe"
-          }
-        ],
+        Ecards: [],
     }
+  },
+
+  async beforeMount() {
+
+    this.condition = this.$store.getters.getParam
+
+    await this.getData()
+
   },
 
   methods: {
@@ -95,107 +95,92 @@ export default {
       this.$store.dispatch("changeParam", {param})
       this.condition = this.$store.getters.getParam
     },
-    async getData(route, first) {
+    async getData() {
       try {
-        console.log("primer try")
-        console.log("Con token: " +  this.$store.getters.getToken)
-        let response = await auth.getCards(route);
 
-        for(let data in response.data.dataToShow) {
-          var dataToShow = {title: String, date: String, hour: String, details: String}
-          let info = response.data.dataToShow[data]
+        let response = await auth.getCards("get-appointments");
+        console.log(response)
+        await this.saveAppointmentsData(response)
+        
 
-          if (this.condition === "appointments"){
-            dataToShow.title = "CITA FISIOTERAPIA - " + info.Employee_name
-          } else if (this.condition === "exercises"){
-            dataToShow.title = "EJERCICIO - " + info.Name
-          }
-          dataToShow.date = info.date.substring(0,10)
-          dataToShow.hour = info.date.substring(11,16)
-          if (this.condition === "exercises"){
-            dataToShow.details = info.Description
-          } else {
-            dataToShow.details = "Cita en la clinica FORTIA calle San Juan"
-          }
-
-          this.saveData(first, dataToShow)
+        if (this.$store.getters.getUserLevel === 0) {
+          let exerciseResponse = await auth.getCards("get-exercises");
+          console.log(exerciseResponse)
+          await this.saveExerciseData(exerciseResponse)
         }
+
+        console.log(this.Acards)
+        console.log(this.Ecards)
+
       } catch (error) {
-        console.log(error.response)
         if (error.response.data.state === "Token no valido"){
-          console.log("token no valido")
-          this.changeTokens()
+          await this.changeTokens()
         } else {
-          console.log(error.response)
-          console.log("esta aca")
           this.$router.push({name: "error", params:{error: error.response.data.state}});
         }
       }
     },
 
-    saveData(first, dataToShow){
-      if (first){
-        if (this.condition === "appointments"){
-          this.Acards.push(dataToShow)        
-        } else if (this.condition === "exercises"){
-          this.Ecards.push(dataToShow)        
+    async saveAppointmentsData(response){
+      for(let data in response.data.dataToShow) {
+        var dataToShow = {title: String, date: String, hour: String, details: String}
+        let info = response.data.dataToShow[data]
+
+        if (this.user_level === 0){
+          dataToShow.title = "CITA FISIOTERAPIA - " + info.Employee_name
+        } else if (this.user_level === 1 || this.user_level === 2){
+          dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name
         }
-      } else {
-        if (this.condition === "appointments"){
-          this.Ecards.push(dataToShow)        
-        } else if (this.condition === "exercises"){
-          this.Acards.push(dataToShow)        
+
+        dataToShow.date = info.date.substring(0,10)
+        dataToShow.hour = info.date.substring(11,16)
+        dataToShow.details = "Cita en la clinica FORTIA calle San Juan"
+
+
+
+        var appointmentDate = new Date(dataToShow.date)
+        var dateCondition = new Date()
+        dateCondition.setDate(dateCondition.getDate() - 1)
+        if (appointmentDate > dateCondition){
+          this.Acards.push(dataToShow)
+        }
+      }
+    },
+
+    async saveExerciseData(response){
+      for(let data in response.data.dataToShow) {
+        var dataToShow = {title: String, date: String, hour: String, details: String}
+        let info = response.data.dataToShow[data]
+
+        dataToShow.title = "EJERCICIO - " + info.Name
+        dataToShow.date = info.date.substring(0,10)
+        dataToShow.hour = info.date.substring(11,16)
+        dataToShow.details = info.Description
+
+        var exerciseDate = new Date(dataToShow.date)
+        var dateCondition = new Date()
+        dateCondition.setDate(dateCondition.getDate() - 1)
+        if(exerciseDate > dateCondition){
+          this.Ecards.push(dataToShow)
         }
       }
     },
 
     async changeTokens(){
       try{
-        console.log("entra en el segundo try")
-        let tokenResponse = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
-        console.log(tokenResponse)
-        console.log("Access token: " + tokenResponse.data.accessToken)
-        console.log("Refresh Token: " + tokenResponse.data.refreshToken)
-        let accessToken = tokenResponse.data.accessToken
-        let refreshToken = tokenResponse.data.refreshToken
+        let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
+
+        let accessToken = response.data.accessToken
+        let refreshToken = response.data.refreshToken
+
         await this.$store
             .dispatch("tokensChange", { accessToken, refreshToken })
-            .then(() => this.$router.push("home"));
+            .then(() => this.getData());
       } catch (error){
-        console.log(this.$store.getters.getRefreshToken)
-        console.log(error.response)
-        console.log("esta aqui")
         this.$store.dispatch("userLogout");
       }
     }
   },
-
-  beforeMount() {
-
-    console.log("Hijo: " + this.$props.state)
-    console.log("Hijo: " + this.$props.user_level)
-
-    this.condition = this.$store.getters.getParam
-
-    let firstRoute = ""
-    if (this.condition === "appointments"){
-      firstRoute = "get-appointments"
-      if (this.user_level === 0){
-        this.secondRoute = "get-exercises"
-      }
-    } else if (this.condition === "exercises"){
-      firstRoute = "get-exercises"
-      this.secondRoute = "get-appointments"
-    }
-
-    this.getData(firstRoute, true)
-
-  },
-
-  mounted() {
-    this.getData(this.secondRoute, false)
-  }
-
 
 };
 </script>
