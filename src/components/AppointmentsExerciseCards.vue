@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-col cols="12" xl="2">
-      <v-row class="pb-6 mt-n8" align="center" justify="center">
+      <v-row class="pb-6 mt-4" align="center" justify="center">
           <v-btn-toggle v-model="toggle_exclusive" rounded >
           <v-btn value="appointments" @click="changeToAppointments">Mis citas</v-btn>
           <v-btn value="exercises" @click="changeToExercises">Mis ejercicios</v-btn>
@@ -132,18 +132,19 @@ export default {
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name
         }
 
-        dataToShow.date = info.date.substring(0,10)
-        dataToShow.hour = info.date.substring(11,16)
+        const date = new Date(info.date.substring(0,10) + " " + info.date.substring(11,16))
+        const spRegionTime = new Date(date).toLocaleString(
+          'eu-SP',
+          {
+            timeZone: 'GMT0',
+          }
+        );
+
+        dataToShow.date = spRegionTime.substring(0,spRegionTime.indexOf(' '))
+        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' '),spRegionTime.length-3)
         dataToShow.details = "Cita en la clinica FORTIA calle San Juan"
 
-
-
-        var appointmentDate = new Date(dataToShow.date)
-        var dateCondition = new Date()
-        dateCondition.setDate(dateCondition.getDate() - 1)
-        if (appointmentDate > dateCondition){
-          this.Acards.push(dataToShow)
-        }
+        this.Acards.push(dataToShow)
       }
     },
 
@@ -153,16 +154,21 @@ export default {
         let info = response.data.dataToShow[data]
 
         dataToShow.title = "EJERCICIO - " + info.Name
-        dataToShow.date = info.date.substring(0,10)
-        dataToShow.hour = info.date.substring(11,16)
+
+        
+        const date = new Date(info.date.substring(0,10) + " " + info.date.substring(11,16))
+        const spRegionTime = new Date(date).toLocaleString(
+          'eu-SP',
+          {
+            timeZone: 'GMT0',
+          }
+        );
+
+        dataToShow.date = spRegionTime.substring(0,spRegionTime.indexOf(' '))
+        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' '),spRegionTime.length-3)
         dataToShow.details = info.Description
 
-        var exerciseDate = new Date(dataToShow.date)
-        var dateCondition = new Date()
-        dateCondition.setDate(dateCondition.getDate() - 1)
-        if(exerciseDate > dateCondition){
-          this.Ecards.push(dataToShow)
-        }
+        this.Ecards.push(dataToShow)
       }
     },
 

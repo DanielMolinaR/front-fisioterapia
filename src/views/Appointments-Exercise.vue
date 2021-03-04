@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <TopBar/>
-    <Card class="pa-16" :state="state" :user_level="userLevel"></Card>
+    <Card class="mt-16" :state="state" :user_level="userLevel"></Card>
   </v-container>
 </template>
 

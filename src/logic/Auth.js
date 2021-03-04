@@ -29,4 +29,8 @@ export default {
     return axios.post(ENDPOINT_PATH + "/create-appointments", appointmentData).then(res => res)
   },
 
+  createExercise(exerciseData){
+    return axios.post(ENDPOINT_PATH + "/create-exercises", exerciseData).then(res => res)
+  },
+
 };

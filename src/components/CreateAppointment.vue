@@ -163,6 +163,7 @@ import auth from "../logic/Auth";
             date: [
                 value => {
                     let minimunDate = new Date()
+                    minimunDate.setDate(minimunDate.getDate() - 1)
                     var dateOfAppointment = Date.parse(value)
                     return (dateOfAppointment > minimunDate) || "Fecha no válida."
                 }
@@ -293,6 +294,7 @@ import auth from "../logic/Auth";
 
       checkDate() {
         let minimunDate = new Date()
+        minimunDate.setDate(minimunDate.getDate() - 1)
         var dateOfAppointment = Date.parse(this.form.date)
         return dateOfAppointment > minimunDate
       },

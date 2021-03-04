@@ -108,6 +108,7 @@
 
 import DatePicker from "../components/DatePicker"
 import TimePicker from "../components/TimePicker"
+import auth from "../logic/Auth";
 
     export default {
         name: "patientSignUpData",
@@ -122,6 +123,7 @@ import TimePicker from "../components/TimePicker"
       const defaultForm = Object.freeze({
         name: '',
         patientEmail: '',
+        description: '',
         date: null,
         hour: null,
       })
@@ -140,6 +142,7 @@ import TimePicker from "../components/TimePicker"
             date: [
                 value => {
                     let minimunDate = new Date()
+                    minimunDate.setDate(minimunDate.getDate() - 1)
                     var dateOfExercise = Date.parse(value)
                     return (dateOfExercise > minimunDate) || "Fecha no válida."
                 }
@@ -168,14 +171,57 @@ import TimePicker from "../components/TimePicker"
         this.form = Object.assign({}, this.defaultForm)
         this.$refs.form.reset()
       },
-      submit () {
-        this.color = "success"
-        this.answer = "Ejercicio creado correctamente."
-        this.snackbar = true
-        this.resetForm()
+      async submit () {
+        try{
+
+          let exerciseData = {
+            Exercise_name: this.form.name,
+            Patient_email: this.form.email,
+            Description: this.form.description,
+            Hour: parseInt(this.form.hour.substring(0,2)),
+            Minute: parseInt(this.form.hour.substring(3,5)),
+            Day: parseInt(this.form.date.substring(3,5)),
+            Month: parseInt(this.form.date.substring(0,2)),
+            Year: parseInt(this.form.date.substring(6,10)),
+          }
+          console.log(exerciseData)
+          let response = await auth.createExercise(exerciseData)
+          console.log(response)
+
+          this.color = "success"
+          this.answer = response.data.state
+          this.snackbar = true
+          this.resetForm()
+
+        } catch (error){
+          console.log(error.response)
+          if (error.response.data.state === "Token no valido"){
+            await this.changeTokens()
+          } else {
+            this.color = "red accent-2"
+            this.answer = error.response.data.state
+            this.snackbar = true
+            this.resetForm()
+          }
+        }
+      },
+      async changeTokens(){
+        try{
+          let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
+
+          let accessToken = response.data.accessToken
+          let refreshToken = response.data.refreshToken
+
+          await this.$store
+              .dispatch("tokensChange", { accessToken, refreshToken })
+              .then(() => this.submit());
+        } catch (error){
+          this.$store.dispatch("userLogout");
+        }
       },
       checkDate() {
         let minimunDate = new Date()
+        minimunDate.setDate(minimunDate.getDate() - 1)
         var dateOfExercise = Date.parse(this.form.date)
         return dateOfExercise > minimunDate
       },

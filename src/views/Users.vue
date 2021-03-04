@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <TopBar/>
-    <v-row>
+    <v-row class="mt-12">
       <v-col cols="6" sm="6" md="6" lg="6" xl="6">
         <p style="font-family: Economica; font-size: 40px" v-if="this.state === 'patients'">Pacientes:</p>
         <p style="font-family: Economica; font-size: 40px" v-if="this.state === 'employees'">Empleados:</p>

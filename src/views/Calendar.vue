@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar/>
-    <Calendar class="px-10" :user_level="userLevel" :eventsDataToIterate="eventsData" :keyComponent="key"/>
+    <Calendar class="px-10 mt-8" :user_level="userLevel" :eventsDataToIterate="eventsData" :keyComponent="key"/>
   </div>
 </template>
 
