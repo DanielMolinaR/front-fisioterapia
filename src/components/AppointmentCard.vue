@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import auth from "../logic/Auth";
 
     export default {
     
@@ -77,9 +78,40 @@
         }),
 
         methods: {
-            deleteAppointment(){
+            async deleteAppointment(){
+                console.log("entra")
+                console.log(this.date + this.hour)
+                try{
+                    let dateData = {
+                        DateTime: this.date + this.hour,
+                    };
+                    let response = await auth.deleteAppointment(dateData)
+                    console.log(response)
+                    this.$router.go(0)
+                } catch (error) {
+                    console.log(error.response)
+                    if (error.response.data.state === "Token no valido"){
+                        await this.changeTokens()
+                    } else {
+                        this.$router.push({name: "error", params:{error: error.response.data.state}});
+                    }
+                }
+            },
 
-            }
+            async changeTokens(){
+                try{
+                    let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
+
+                    let accessToken = response.data.accessToken
+                    let refreshToken = response.data.refreshToken
+
+                    await this.$store
+                        .dispatch("tokensChange", { accessToken, refreshToken })
+                        .then(() => this.deleteAppointment());
+                } catch (error){
+                    this.$store.dispatch("userLogout");
+                }
+            },
         }
 
     }
