@@ -38,17 +38,17 @@
             <template>
                 <v-card flat>
                     <v-container fluid>
-                        <v-row justify="center">
-                            <v-col cols="12" align-self="end">
-                                <p>¿Estás seguro que quieres cancelar esta cita?</p>
+                        <v-row justify="space-around" align="center" >
+                            <v-col cols="12" class="d-flex justify-center">
+                                <p class="mr-2">¿Estás seguro que quieres cancelar esta cita?</p>
                             </v-col>
-                            <v-col cols="6" align-self="end">
-                                <v-btn color="red accent-2" :dark= true @click="dialog = !dialog">
+                            <v-col cols="6" class="d-flex justify-center">
+                                <v-btn class="mr-2" outlined color="red accent-2" :dark= true @click="dialog = !dialog">
                                     NO
                                 </v-btn>
                             </v-col>
-                            <v-col cols="6" align-self="center">
-                                <v-btn color="red accent-2" :dark= true @click="deleteAppointment">
+                            <v-col cols="6" class="d-flex justify-center">
+                                <v-btn class="mr-2" color="green accent-2" :dark= true @click="deleteAppointment">
                                     SÍ
                                 </v-btn>
                             </v-col>

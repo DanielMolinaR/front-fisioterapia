@@ -110,19 +110,27 @@ import DatePicker from "../components/DatePicker"
 import TimePicker from "../components/TimePicker"
 import auth from "../logic/Auth";
 
-    export default {
-        name: "patientSignUpData",
+  export default {
+    name: "createExercise",
 
-        components: {
-            DatePicker,
-            TimePicker
-        },
+    props: {
+      email: String,
+    },
 
+    components: {
+        DatePicker,
+        TimePicker
+    },
+
+    mounted() {
+      console.log(this.$props.email)
+      this.form.email = this.$props.email
+    },
 
     data () {
       const defaultForm = Object.freeze({
         name: '',
-        patientEmail: '',
+        email: '',
         description: '',
         date: null,
         hour: null,
@@ -170,6 +178,7 @@ import auth from "../logic/Auth";
       resetForm () {
         this.form = Object.assign({}, this.defaultForm)
         this.$refs.form.reset()
+        this.$emit("changeDialog")
       },
       async submit () {
         try{

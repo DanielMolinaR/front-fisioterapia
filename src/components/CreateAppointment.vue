@@ -136,6 +136,9 @@ import auth from "../logic/Auth";
         TimePicker
     },
 
+    props: {
+      email: String,
+    },
 
     data () {
       const defaultForm = Object.freeze({
@@ -230,12 +233,19 @@ import auth from "../logic/Auth";
 
     async beforeMount() {
       this.userLevel = this.$store.getters.getUserLevel
+      
+    },
+
+    mounted() {
+      console.log(this.$props.email)
+      this.form.patient_email = this.$props.email
     },
 
     methods: {
       resetForm () {
         this.form = Object.assign({}, this.defaultForm)
         this.$refs.form.reset()
+        this.$emit("changeDialog")
       },
       async submit () {
         try{

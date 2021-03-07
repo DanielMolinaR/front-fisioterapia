@@ -33,7 +33,7 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" max-width="500px">
-      <CreateAppointment/>
+      <CreateAppointment @changeDialog="dialog = !dialog" :email="''"/>
     </v-dialog>
     <v-row align="center" justify="center" class="py-5 mx-n8" 
     v-if="user_level > 0 && this.condition === 'exercises'">

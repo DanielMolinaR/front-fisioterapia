@@ -19,12 +19,17 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row class="mt-n10 mb-n4" v-if="this.state === 'employees'">
+      <v-col cols="12" class="d-flex justify-center">
+        <p style="font-family: Economica; font-size: 18px" >Activo <span><div class="rounded-circle pa-2 green accent-3 rounded-circle d-inline-block mr-2"></div></span> Inactivo <span><div class="rounded-circle pa-2 red accent-3 rounded-circle d-inline-block mr-2"></div></span> Administrador <span><div class="rounded-circle pa-2 blue lighten-3 rounded-circle d-inline-block mr-1"></div></span></p>
+      </v-col>     
+    </v-row>  
     <v-dialog v-model="dialog" max-width="500px">
         <RegisterEmployee/>
     </v-dialog>
-    <v-row class="pt-4">
+    <v-row>
       <v-col v-for="user in this.users" :key="user.name" cols="12">
-        <Users class="px-10 " :condition="state" :name="user.name" :email="user.email"/> 
+        <Users class="px-10 " :condition="state" :name="user.name" :email="user.email" :active="user.active" :admin="user.admin"/> 
       </v-col>
     </v-row>
   </v-container>
@@ -52,7 +57,6 @@ export default {
       state: "",
       userLevel: 0,
       users: [],
-      secondRoute: "",
       dialog: false,
     }
   },
@@ -77,7 +81,8 @@ export default {
     } else if (this.state === "patients"){
       route = "get-all-patients"
     }
-    this.getUsersData(route)
+    await this.getUsersData(route)
+    console.log(this.users)
   },
 
     methods: {
@@ -85,23 +90,33 @@ export default {
       try {
         let response = await auth.getCards(route);
 
-        for(let user in response.data.dataToShow) {
-          var dataToShow = {name: String, email: String}
-          let data = response.data.dataToShow[user]
-          dataToShow.name = data.Name
-          dataToShow.email = data.Email
-          this.users.push(dataToShow)
-        }
+        console.log(response)
+
+        await this.saveData(response)
+
       } catch (error) {
         if (error.response.data.state === "Token no valido"){
-          await this.changeTokens()
+          await this.changeTokens(route)
         } else {
+          console.log(error.response.data.state)
           this.$router.push({name: "error", params:{error: error.response.data.state}});
         }
       }
     },
     
-    async changeTokens(){
+    async saveData(response){
+      for(let user in response.data.dataToShow) {
+        var dataToShow = {name: String, email: String, active: Boolean, admin: Boolean}
+        let data = response.data.dataToShow[user]
+        dataToShow.name = data.Name
+        dataToShow.email = data.Email
+        dataToShow.active = data.Active
+        dataToShow.admin = data.Admin
+        this.users.push(dataToShow)
+      }
+    },
+
+    async changeTokens(route){
       try{
         let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
 
@@ -110,7 +125,7 @@ export default {
 
         await this.$store
             .dispatch("tokensChange", { accessToken, refreshToken })
-            .then(() => this.getUsersData());
+            .then(() => this.getUsersData(route));
       } catch (error){
         this.$store.dispatch("userLogout");
       }

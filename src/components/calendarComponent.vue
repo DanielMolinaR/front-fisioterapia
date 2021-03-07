@@ -71,7 +71,7 @@
                     </v-btn>
                   </v-col>
                   <v-col cols="6">
-                    <v-btn text color="red accent-2" @click="selectedOpen = false">
+                    <v-btn text color="red accent-2" @click="selectedOpen = false; Ddialog = !Ddialog; ">
                       Cancelar
                     </v-btn>
                   </v-col>
@@ -83,11 +83,16 @@
       </v-col>
     </v-row>
     <v-row align="right" justify="right" class="py-6" v-if="user_level > 0">
+      <v-col v-if="user_level === 2"  class="mt-n16">
+        <v-col v-for="employee in this.arrayEmployees" :key="employee.Name">
+          <span v-if="employee.Name != 'function String() { [native code] }'" v-text="employee.Name"/><v-btn :color="employee.Color" class="ml-1"></v-btn>
+        </v-col>
+      </v-col>
       <v-col>
         <v-card>
             <v-fab-transition>
             <v-btn color="#F5914D" dark absolute
-              top right fab @click="dialog = !dialog"
+              top right fab @click="Adialog = !Adialog"
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -95,14 +100,38 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="dialog" max-width="500px">
+    <v-dialog v-model="Adialog" max-width="500px">
       <CreateAppointment/>
+    </v-dialog>
+    <v-dialog v-model="Ddialog" max-width="500px">
+      <template>
+          <v-card flat>
+              <v-container fluid>
+                  <v-row justify="space-around" align="center" >
+                      <v-col cols="12" class="d-flex justify-center">
+                          <p class="mr-2">¿Estás seguro que quieres cancelar esta cita?</p>
+                      </v-col>
+                      <v-col cols="6" class="d-flex justify-center">
+                          <v-btn class="mr-2" outlined color="red accent-2" :dark= true @click="Ddialog = !Ddialog">
+                              NO
+                          </v-btn>
+                      </v-col>
+                      <v-col cols="6" class="d-flex justify-center">
+                          <v-btn class="mr-2" color="green accent-2" :dark= true @click="deleteAppointment">
+                              SÍ
+                          </v-btn>
+                      </v-col>
+                  </v-row>
+              </v-container>
+          </v-card>
+      </template>
     </v-dialog>
   </v-container>
 </template>
 
 <script>
 import CreateAppointment from "../components/CreateAppointment"
+import auth from "../logic/Auth";
 
   export default {
     name: "calendarComponent",
@@ -119,7 +148,8 @@ import CreateAppointment from "../components/CreateAppointment"
 
     data: () => ({
       show: false,
-      dialog: false,
+      Ddialog: false,
+      Adialog: false,
       focus: '',
       type: 'week',
       typeToLabel: {
@@ -182,8 +212,9 @@ import CreateAppointment from "../components/CreateAppointment"
           console.log(this.$props.eventsDataToIterate)
           console.log(appoint)
           var appointmentData = this.$props.eventsDataToIterate[appoint]
-          const first = new Date (appointmentData.date + "T" + appointmentData.hour + ":00")
-          const second = new Date (appointmentData.date + "T" + (parseInt(appointmentData.hour.substring(0,2)) + 1) + ":00:00")
+          console
+          const first = new Date (appointmentData.date + " " + appointmentData.hour + ":00")
+          const second = new Date (appointmentData.date + " " + (parseInt(appointmentData.hour.substring(0,2)) + 1) + ":00:00")
           console.log("Inicio: " + first)
           console.log("Final: " + second)
 
@@ -211,6 +242,43 @@ import CreateAppointment from "../components/CreateAppointment"
       },
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
+      },
+
+      async deleteAppointment(){
+
+        console.log(this.selectedEvent)
+        console.log(this.selectedElement)
+        /*
+        try{
+            let dateData = {
+                DateTime: this.date + this.hour,
+            };
+            let response = await auth.deleteAppointment(dateData)
+            console.log(response)
+            this.$router.go(0)
+        } catch (error) {
+            console.log(error.response)
+            if (error.response.data.state === "Token no valido"){
+                await this.changeTokens()
+            } else {
+                this.$router.push({name: "error", params:{error: error.response.data.state}});
+            }
+        }*/
+      },
+
+      async changeTokens(){
+        try{
+            let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
+
+            let accessToken = response.data.accessToken
+            let refreshToken = response.data.refreshToken
+
+            await this.$store
+                .dispatch("tokensChange", { accessToken, refreshToken })
+                .then(() => this.deleteAppointment());
+        } catch (error){
+            this.$store.dispatch("userLogout");
+        }
       },
     },
   }

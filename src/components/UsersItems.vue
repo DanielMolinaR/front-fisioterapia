@@ -22,6 +22,17 @@
                             </v-row>
                         </v-row>
                     </v-col>
+                    <v-col cols="12" class="text--secondary my-n3"  md="4" lg="4" xl="4" sm="6" v-if="this.$props.condition === 'employees'">
+                        <v-row no-gutters  style="width: 100%" >
+                            <v-row align="center" justify="center">
+                                <v-col cols="8">
+                                    <span v-text="'Estado: '"/><div v-if="this.$props.admin" class="rounded-circle pa-2 blue lighten-3 rounded-circle d-inline-block"></div>
+                                    <div v-if="!this.$props.admin && this.$props.active" class="rounded-circle pa-2 green accent-3 rounded-circle d-inline-block "></div>
+                                    <div v-if="!this.$props.admin && !this.$props.active" class="rounded-circle pa-2 red accent-3 rounded-circle d-inline-block"></div>
+                                </v-col>
+                            </v-row>
+                        </v-row>
+                    </v-col>
                 </v-row>
             </v-expansion-panel-header>
             <div v-if="this.$props.condition === 'patients'">
@@ -29,14 +40,14 @@
                 <v-row align="center" justify="center"> 
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                         <v-row align="center" justify="center">
-                            <v-btn color="#F5914D" :dark= true>
+                            <v-btn color="#F5914D" :dark= true @click="dialogE = !dialogE">
                                 Crear ejercicio
                             </v-btn>
                         </v-row>
                     </v-col>
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                         <v-row align="center" justify="center">
-                            <v-btn color="#000000" :dark= true outlined> 
+                            <v-btn color="#000000" :dark= true outlined @click="dialogA = !dialogA"> 
                                 Crear cita
                             </v-btn>
                         </v-row>
@@ -55,7 +66,7 @@
                 <v-row align="center" justify="center"> 
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                         <v-row align="center" justify="center">
-                            <v-btn color="#F5914D" :dark= true @click="$router.push({name: calendar})">
+                            <v-btn color="#F5914D" :dark= true @click="pushToCalendar">
                                 Ver citas
                             </v-btn>
                         </v-row>
@@ -79,10 +90,18 @@
             </div>
             </v-expansion-panel>
         </v-expansion-panels>
+        <v-dialog v-model="dialogA" max-width="500px">
+            <CreateAppointment @changeDialog="dialogA = !dialogA" :email="this.$props.email"/>
+        </v-dialog>
+        <v-dialog v-model="dialogE" max-width="1000px">
+            <CreateExercise @changeDialog="dialogE = !dialogE" :email="this.$props.email"/>
+        </v-dialog>
     </v-container>
 </template>
 
 <script>
+import CreateAppointment from "../components/CreateAppointment"
+import CreateExercise from "../components/CreateExercise"
 
 export default {
 
@@ -90,7 +109,27 @@ export default {
         condition: String,
         name: String,
         email: String,
+        active: Boolean,
+        admin: Boolean,
     },  
+
+    components: {
+      CreateAppointment,
+      CreateExercise,
+     },
+
+    data (){
+        return {
+            dialogA: false,
+            dialogE: false,
+        }
+    },
+
+    methods: {
+        pushToCalendar() {
+            this.$router.push("calendar")
+        },
+    }
 
 };
 </script>

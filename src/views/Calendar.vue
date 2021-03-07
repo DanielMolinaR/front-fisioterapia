@@ -69,18 +69,32 @@ export default {
         var dataToShow = {title: String, date: String, hour: String, details: String}
         let info = response.data.dataToShow[data]
 
-        if (this.userLevel === 0){
+        if (this.userLevel === 0 || this.userLevel === 2){
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Employee_name
-        } else if (this.userLevel === 1 || this.userLevel === 2){
+        } else if (this.userLevel === 1){
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name
         }
 
-        dataToShow.date = info.date.substring(0,10)
-        dataToShow.hour = info.date.substring(11,16)
+        const date = new Date(info.date.substring(0,10) + " " + info.date.substring(11,16))
+        const spRegionTime = new Date(date).toLocaleString(
+          'eu-SP',
+          {
+            timeZone: 'GMT0',
+          }
+        );
+
+        dataToShow.date = spRegionTime.substring(0,spRegionTime.indexOf(' '))
+        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' '),spRegionTime.length-3)
 
         console.log(this.eventsData)
         
-        dataToShow.details = "Cita en la clinica FORTIA calle San Juan"
+        if (this.userLevel === 0){
+          dataToShow.details = "Cita en la clinica FORTIA calle San Juan. Fisioterapeuta: " + info.Employee_name
+        } else if (this.userLevel === 1){
+          dataToShow.details = "Cita en la clinica FORTIA calle San Juan. Paciente: " + info.Patient_name
+        } else if (this.userLevel === 2){
+          dataToShow.details = "Cita en la clinica FORTIA calle San Juan.<br><b> Paciente: </b>" + info.Patient_name + "<br><b> Fisioterapeuta: </b>" + info.Employee_name
+        }
 
         this.eventsData.push(dataToShow)
       }
@@ -93,8 +107,16 @@ export default {
         let info = response.data.dataToShow[data]
 
         dataToShow.title = "EJERCICIO - " + info.Name
-        dataToShow.date = info.date.substring(0,10)
-        dataToShow.hour = info.date.substring(11,16)
+        const date = new Date(info.date.substring(0,10) + " " + info.date.substring(11,16))
+        const spRegionTime = new Date(date).toLocaleString(
+          'eu-SP',
+          {
+            timeZone: 'GMT0',
+          }
+        );
+
+        dataToShow.date = spRegionTime.substring(0,spRegionTime.indexOf(' '))
+        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' '),spRegionTime.length-3)
         dataToShow.details = info.Description
 
         this.eventsData.push(dataToShow)
