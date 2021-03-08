@@ -235,6 +235,7 @@ import DatePicker from "../components/BirthDayPicker"
 
     data () {
       const defaultForm = Object.freeze({
+        dni: '',
         name: '',
         surname: '',
         email: '',

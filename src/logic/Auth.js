@@ -41,4 +41,8 @@ export default {
     return axios.delete(ENDPOINT_PATH + "/delete-exercise", { data: dateData }).then(res => res)
   },
 
+  getClinicalBackground(data){
+    return axios.post(ENDPOINT_PATH + "/get-clinical-background", data ).then(res => res)
+  },
+
 };

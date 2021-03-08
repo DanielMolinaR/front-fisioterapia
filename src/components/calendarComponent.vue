@@ -132,6 +132,7 @@
 <script>
 import CreateAppointment from "../components/CreateAppointment"
 import auth from "../logic/Auth";
+import moment from "moment"
 
   export default {
     name: "calendarComponent",
@@ -211,12 +212,16 @@ import auth from "../logic/Auth";
         for (let appoint in this.$props.eventsDataToIterate) {
           console.log(this.$props.eventsDataToIterate)
           console.log(appoint)
-          var appointmentData = this.$props.eventsDataToIterate[appoint]
-          console
-          const first = new Date (appointmentData.date + " " + appointmentData.hour + ":00")
-          const second = new Date (appointmentData.date + " " + (parseInt(appointmentData.hour.substring(0,2)) + 1) + ":00:00")
+          let appointmentData = this.$props.eventsDataToIterate[appoint]
+          console.log("date: " + appointmentData.date + " " + appointmentData.hour)
+          let date = moment(appointmentData.date + " " + appointmentData.hour, "DD/MM/YYYY hh:mm:ss");
+          console.log("Primera: " + date)
+          let date2 = moment(appointmentData.date + " " + (parseInt(appointmentData.hour.substring(0,2)) + 1) + ":00:00", "DD/MM/YYYY hh:MM:ss");
+          console.log("Segunda: " + date2)
+          let first = new Date (date)
           console.log("Inicio: " + first)
-          console.log("Final: " + second)
+          let second = new Date (date)
+          console.log("Final: " + second.setHours(second.getHours()+1))
 
           if (this.$props.user_level === 2){
             var name = appointmentData.title.substring(20, appointmentData.title.length)

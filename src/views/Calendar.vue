@@ -82,16 +82,17 @@ export default {
             timeZone: 'GMT0',
           }
         );
-
+        console.log(spRegionTime)
+        console.log("hola")
         dataToShow.date = spRegionTime.substring(0,spRegionTime.indexOf(' '))
-        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' '),spRegionTime.length-3)
+        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' ') + 1,spRegionTime.length)
 
         console.log(this.eventsData)
         
         if (this.userLevel === 0){
-          dataToShow.details = "Cita en la clinica FORTIA calle San Juan. Fisioterapeuta: " + info.Employee_name
+          dataToShow.details = "Cita en la clinica FORTIA calle San Juan.<br><b> Fisioterapeuta: </b>" + info.Employee_name
         } else if (this.userLevel === 1){
-          dataToShow.details = "Cita en la clinica FORTIA calle San Juan. Paciente: " + info.Patient_name
+          dataToShow.details = "Cita en la clinica FORTIA calle San Juan. <br><b> Paciente: </b>: " + info.Patient_name
         } else if (this.userLevel === 2){
           dataToShow.details = "Cita en la clinica FORTIA calle San Juan.<br><b> Paciente: </b>" + info.Patient_name + "<br><b> Fisioterapeuta: </b>" + info.Employee_name
         }
@@ -102,7 +103,7 @@ export default {
 
     async saveExerciseData(response){
       for(let data in response.data.dataToShow) {
-        console.log("Bucle ejercicios")
+
         var dataToShow = {title: String, date: String, hour: String, details: String}
         let info = response.data.dataToShow[data]
 
@@ -116,7 +117,7 @@ export default {
         );
 
         dataToShow.date = spRegionTime.substring(0,spRegionTime.indexOf(' '))
-        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' '),spRegionTime.length-3)
+        dataToShow.hour = spRegionTime.substring(spRegionTime.indexOf(' ') + 1,spRegionTime.length)
         dataToShow.details = info.Description
 
         this.eventsData.push(dataToShow)
@@ -125,7 +126,6 @@ export default {
 
     async changeTokens(){
       try{
-        console.log("intenta coger los nuevos token¿?¿?")
         let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
 
         let accessToken = response.data.accessToken

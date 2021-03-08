@@ -56,6 +56,12 @@ const routes = [
     props: true,
     component: () => import ("../views/SignUpEmployee.vue"),
   },
+  {
+    path: "/clinical-background",
+    name: "clinical-background",
+    props: true,
+    component: () => import ("../views/ClinicalBackground.vue"),
+  },
 ];
 
 const router = new VueRouter({

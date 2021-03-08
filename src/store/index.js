@@ -10,7 +10,7 @@ const getDefaultState = () => {
   return {
     token: "",
     refreshToken: "hay algo",
-    userLevel: 2,
+    userLevel: -1,
     userName: "",
     param: "",
     email: "",

@@ -54,7 +54,7 @@
                     </v-col>
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                         <v-row align="center" justify="center">
-                            <v-btn color="#0b0b0b" :dark= true>
+                            <v-btn color="#0b0b0b" :dark= true @click="pushToClinicalBackgorund">
                                 Ver historial clínico
                             </v-btn>
                         </v-row>
@@ -74,7 +74,7 @@
                     <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                         <v-row align="center" justify="center">
                             <v-btn outlined color="#000000" :dark= true>
-                                Ver perfil
+                                Convertir a administrador
                             </v-btn>
                         </v-row>
                     </v-col>
@@ -128,6 +128,9 @@ export default {
     methods: {
         pushToCalendar() {
             this.$router.push("calendar")
+        },
+        pushToClinicalBackgorund() {
+            this.$router.push({name: "clinical-background", params: {email: this.$props.email}})
         },
     }
 
