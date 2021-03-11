@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <TopBar />
-    <Cards class="mt-6"/>
+    <Cards class="mt-6" />
   </v-container>
 </template>
 
@@ -17,5 +17,10 @@ export default {
     Cards,
   },
 
+  beforeMount() {
+    if (this.$store.getters.getToken.length === 0){
+      this.$store.dispatch("userLogout");
+    }
+  }
 };
 </script>

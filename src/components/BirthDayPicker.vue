@@ -32,39 +32,52 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      date: null,
-      menu: false,
-      months: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agos", "Sept", "Oct", "Nov", "Dic"],
-      daysOfWeek: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-    }),
-    watch: {
-      menu (val) {
-        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
-      },
+export default {
+  data: () => ({
+    date: null,
+    menu: false,
+    months: [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Agos",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dic",
+    ],
+    daysOfWeek: ["D", "L", "M", "X", "J", "V", "S"],
+  }),
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
-    methods: {
-      save (date) {
-        this.$refs.menu.save(date)
-      },
-        formatDate (date) {
-            if (!date) return null
+  },
+  methods: {
+    save(date) {
+      this.$refs.menu.save(date);
+    },
+    formatDate(date) {
+      if (!date) return null;
 
-            const [year, month, day] = date.split('-')
-            return `${month}/${day}/${year}`
-        },
-        setDate (date) {
-            this.$emit("changeDate", this.formatDate(date))
-        },
-        getMonth(date){
-            let i = new Date(date).getMonth(date)
-            return this.months[i]
-        },
-        getDay(date){
-            let i = new Date(date).getDay(date)
-            return this.daysOfWeek[i]
-        },
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
     },
-  }
+    setDate(date) {
+      this.$emit("changeDate", this.formatDate(date));
+    },
+    getMonth(date) {
+      let i = new Date(date).getMonth(date);
+      return this.months[i];
+    },
+    getDay(date) {
+      let i = new Date(date).getDay(date);
+      return this.daysOfWeek[i];
+    },
+  },
+};
 </script>

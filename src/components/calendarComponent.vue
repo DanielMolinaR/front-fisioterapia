@@ -4,7 +4,12 @@
       <v-col>
         <v-sheet height="64">
           <v-toolbar flat color="#fffafa">
-            <v-btn outlined class="ml-n4" color="grey darken-2" @click="setToday">
+            <v-btn
+              outlined
+              class="ml-n4"
+              color="grey darken-2"
+              @click="setToday"
+            >
               Today
             </v-btn>
             <v-btn fab text small color="grey darken-2" @click="prev">
@@ -23,7 +28,13 @@
             <v-spacer></v-spacer>
             <v-menu bottom right>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn outlined color="grey darken-2"  v-bind="attrs" v-on="on" class="mr-n4">
+                <v-btn
+                  outlined
+                  color="grey darken-2"
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-n4"
+                >
                   <span>{{ typeToLabel[type] }}</span>
                   <v-icon right>
                     mdi-menu-down
@@ -48,14 +59,27 @@
           </v-toolbar>
         </v-sheet>
         <v-sheet>
-          <v-calendar ref="calendar" v-model="focus" color="primary" :events="events" 
-            :event-color="getEventColor" :type="type" @click:event="showEvent"
-            @click:more="viewDay" @click:date="viewDay" @change="updateRange"
-            :weekdays=this.daysOfWeek>
+          <v-calendar
+            ref="calendar"
+            v-model="focus"
+            color="primary"
+            :events="events"
+            :event-color="getEventColor"
+            :type="type"
+            @click:event="showEvent"
+            @click:more="viewDay"
+            @click:date="viewDay"
+            @change="updateRange"
+            :weekdays="this.daysOfWeek"
+          >
           </v-calendar>
-          <v-menu v-model="selectedOpen" :close-on-content-click="false" 
-              :activator="selectedElement" offset-x max-width="50%"
-              >
+          <v-menu
+            v-model="selectedOpen"
+            :close-on-content-click="false"
+            :activator="selectedElement"
+            offset-x
+            max-width="50%"
+          >
             <v-card color="#fffafa" min-width="100%" flat>
               <v-toolbar :color="selectedEvent.color" dark>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
@@ -66,12 +90,23 @@
               <v-card-actions>
                 <v-row>
                   <v-col cols="6">
-                    <v-btn text :color="selectedEvent.color" @click="selectedOpen = false">
+                    <v-btn
+                      text
+                      :color="selectedEvent.color"
+                      @click="selectedOpen = false"
+                    >
                       Cerrar
                     </v-btn>
                   </v-col>
                   <v-col cols="6">
-                    <v-btn text color="red accent-2" @click="selectedOpen = false; Ddialog = !Ddialog; ">
+                    <v-btn
+                      text
+                      color="red accent-2"
+                      @click="
+                        selectedOpen = false;
+                        Ddialog = !Ddialog;
+                      "
+                    >
                       Cancelar
                     </v-btn>
                   </v-col>
@@ -83,16 +118,25 @@
       </v-col>
     </v-row>
     <v-row align="right" justify="right" class="py-6" v-if="user_level > 0">
-      <v-col v-if="user_level === 2"  class="mt-n16">
+      <v-col v-if="user_level === 2" class="mt-n16">
         <v-col v-for="employee in this.arrayEmployees" :key="employee.Name">
-          <span v-if="employee.Name != 'function String() { [native code] }'" v-text="employee.Name"/><v-btn :color="employee.Color" class="ml-1"></v-btn>
+          <span
+            v-if="employee.Name != 'function String() { [native code] }'"
+            v-text="employee.Name"
+          /><v-btn :color="employee.Color" class="ml-1"></v-btn>
         </v-col>
       </v-col>
       <v-col>
         <v-card>
-            <v-fab-transition>
-            <v-btn color="#F5914D" dark absolute
-              top right fab @click="Adialog = !Adialog"
+          <v-fab-transition>
+            <v-btn
+              color="#F5914D"
+              dark
+              absolute
+              top
+              right
+              fab
+              @click="Adialog = !Adialog"
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -101,159 +145,206 @@
       </v-col>
     </v-row>
     <v-dialog v-model="Adialog" max-width="500px">
-      <CreateAppointment/>
+      <CreateAppointment />
     </v-dialog>
     <v-dialog v-model="Ddialog" max-width="500px">
       <template>
-          <v-card flat>
-              <v-container fluid>
-                  <v-row justify="space-around" align="center" >
-                      <v-col cols="12" class="d-flex justify-center">
-                          <p class="mr-2">¿Estás seguro que quieres cancelar esta cita?</p>
-                      </v-col>
-                      <v-col cols="6" class="d-flex justify-center">
-                          <v-btn class="mr-2" outlined color="red accent-2" :dark= true @click="Ddialog = !Ddialog">
-                              NO
-                          </v-btn>
-                      </v-col>
-                      <v-col cols="6" class="d-flex justify-center">
-                          <v-btn class="mr-2" color="green accent-2" :dark= true @click="deleteAppointment">
-                              SÍ
-                          </v-btn>
-                      </v-col>
-                  </v-row>
-              </v-container>
-          </v-card>
+        <v-card flat>
+          <v-container fluid>
+            <v-row justify="space-around" align="center">
+              <v-col cols="12" class="d-flex justify-center">
+                <p class="mr-2">
+                  ¿Estás seguro que quieres cancelar esta cita?
+                </p>
+              </v-col>
+              <v-col cols="6" class="d-flex justify-center">
+                <v-btn
+                  class="mr-2"
+                  outlined
+                  color="red accent-2"
+                  :dark="true"
+                  @click="Ddialog = !Ddialog"
+                >
+                  NO
+                </v-btn>
+              </v-col>
+              <v-col cols="6" class="d-flex justify-center">
+                <v-btn
+                  class="mr-2"
+                  color="green accent-2"
+                  :dark="true"
+                  @click="deleteAppointment"
+                >
+                  SÍ
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
       </template>
     </v-dialog>
   </v-container>
 </template>
 
 <script>
-import CreateAppointment from "../components/CreateAppointment"
+import CreateAppointment from "../components/CreateAppointment";
 import auth from "../logic/Auth";
-import moment from "moment"
+import moment from "moment";
 
-  export default {
-    name: "calendarComponent",
+export default {
+  name: "calendarComponent",
 
-    components: {
-      CreateAppointment,
+  components: {
+    CreateAppointment,
+  },
+
+  props: {
+    user_level: Number,
+    eventsDataToIterate: Array,
+    keyComponent: Boolean,
+  },
+
+  data: () => ({
+    show: false,
+    Ddialog: false,
+    Adialog: false,
+    focus: "",
+    type: "week",
+    typeToLabel: {
+      month: "Month",
+      week: "Week",
+      day: "Day",
+      "4day": "4 Days",
     },
+    selectedEvent: {},
+    selectedElement: null,
+    selectedOpen: false,
+    events: [],
+    colors: [
+      "blue",
+      "indigo",
+      "deep-purple",
+      "cyan",
+      "green",
+      "orange",
+      "grey darken-1",
+      "#5C51F0",
+      "#F0C151",
+      "#6DF000",
+      "#F53D38",
+      "#E243F5",
+      "#2CDBDB",
+    ],
+    daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
+    arrayEmployees: [{ Name: String, Color: String }],
+  }),
 
-    props: {
-      user_level: Number,
-      eventsDataToIterate: Array,
-      keyComponent: Boolean,
+  methods: {
+    viewDay({ date }) {
+      this.focus = date;
+      this.type = "day";
     },
+    getEventColor(event) {
+      return event.color;
+    },
+    setToday() {
+      this.focus = "";
+    },
+    prev() {
+      this.$refs.calendar.prev();
+    },
+    next() {
+      this.$refs.calendar.next();
+    },
+    showEvent({ nativeEvent, event }) {
+      const open = () => {
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
+        setTimeout(() => {
+          this.selectedOpen = true;
+        }, 10);
+      };
 
-    data: () => ({
-      show: false,
-      Ddialog: false,
-      Adialog: false,
-      focus: '',
-      type: 'week',
-      typeToLabel: {
-        month: 'Month',
-        week: 'Week',
-        day: 'Day',
-        '4day': '4 Days',
-      },
-      selectedEvent: {},
-      selectedElement: null,
-      selectedOpen: false,
-      events: [ ],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1', '#5C51F0', '#F0C151', '#6DF000', '#F53D38', '#E243F5', '#2CDBDB'],
-      daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
-      arrayEmployees: [{Name: String, Color: String}],
-    }),
+      if (this.selectedOpen) {
+        this.selectedOpen = false;
+        setTimeout(open, 10);
+      } else {
+        open();
+      }
 
-    methods: {
-      viewDay ({ date }) {
-        this.focus = date
-        this.type = 'day'
-      },
-      getEventColor (event) {
-        return event.color
-      },
-      setToday () {
-        this.focus = ''
-      },
-      prev () {
-        this.$refs.calendar.prev()
-      },
-      next () {
-        this.$refs.calendar.next()
-      },
-      showEvent ({ nativeEvent, event }) {
-        const open = () => {
-          this.selectedEvent = event
-          this.selectedElement = nativeEvent.target
-          setTimeout(() => {
-            this.selectedOpen = true
-          }, 10)
-        }
+      nativeEvent.stopPropagation();
+    },
+    updateRange() {
+      const events = [];
+      console.log("entra en el update");
 
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          setTimeout(open, 10)
-        } else {
-          open()
-        }
+      var tmpColors = this.colors;
 
-        nativeEvent.stopPropagation()
-      },
-      updateRange () {
-        const events = []
-        console.log("entra en el update")
+      for (let appoint in this.$props.eventsDataToIterate) {
+        console.log(this.$props.eventsDataToIterate);
+        console.log(appoint);
+        let appointmentData = this.$props.eventsDataToIterate[appoint];
+        console.log(
+          "date: " + appointmentData.date + " " + appointmentData.hour
+        );
+        let date = moment(
+          appointmentData.date + " " + appointmentData.hour,
+          "DD/MM/YYYY hh:mm:ss"
+        );
+        console.log("Primera: " + date);
+        let date2 = moment(
+          appointmentData.date +
+            " " +
+            (parseInt(appointmentData.hour.substring(0, 2)) + 1) +
+            ":00:00",
+          "DD/MM/YYYY hh:MM:ss"
+        );
+        console.log("Segunda: " + date2);
+        let first = new Date(date);
+        console.log("Inicio: " + first);
+        let second = new Date(date);
+        console.log("Final: " + second.setHours(second.getHours() + 1));
 
-        var tmpColors = this.colors
-
-        for (let appoint in this.$props.eventsDataToIterate) {
-          console.log(this.$props.eventsDataToIterate)
-          console.log(appoint)
-          let appointmentData = this.$props.eventsDataToIterate[appoint]
-          console.log("date: " + appointmentData.date + " " + appointmentData.hour)
-          let date = moment(appointmentData.date + " " + appointmentData.hour, "DD/MM/YYYY hh:mm:ss");
-          console.log("Primera: " + date)
-          let date2 = moment(appointmentData.date + " " + (parseInt(appointmentData.hour.substring(0,2)) + 1) + ":00:00", "DD/MM/YYYY hh:MM:ss");
-          console.log("Segunda: " + date2)
-          let first = new Date (date)
-          console.log("Inicio: " + first)
-          let second = new Date (date)
-          console.log("Final: " + second.setHours(second.getHours()+1))
-
-          if (this.$props.user_level === 2){
-            var name = appointmentData.title.substring(20, appointmentData.title.length)
-            if (!this.arrayEmployees.some( employee => employee['Name'] === name )){
-              var color = tmpColors[this.rnd(0, this.colors.length - 1)]
-              tmpColors = tmpColors.filter(item => item !== color)
-              var employee = {Name: name, Color: color}
-              this.arrayEmployees.push(employee)
-            }
+        if (this.$props.user_level === 2) {
+          var name = appointmentData.title.substring(
+            20,
+            appointmentData.title.length
+          );
+          if (
+            !this.arrayEmployees.some((employee) => employee["Name"] === name)
+          ) {
+            var color = tmpColors[this.rnd(0, this.colors.length - 1)];
+            tmpColors = tmpColors.filter((item) => item !== color);
+            var employee = { Name: name, Color: color };
+            this.arrayEmployees.push(employee);
           }
-
-          events.push({
-            name: appointmentData.title,
-            start: first,
-            end: second,
-            color: this.$props.user_level === 2 ? this.arrayEmployees.find(employee => {return employee.Name === name}).Color : tmpColors[this.rnd(0, this.colors.length - 1)],
-            details: appointmentData.details,
-            timed: true,
-          })
         }
 
-        this.events = events
-      },
-      rnd (a, b) {
-        return Math.floor((b - a + 1) * Math.random()) + a
-      },
+        events.push({
+          name: appointmentData.title,
+          start: first,
+          end: second,
+          color:
+            this.$props.user_level === 2
+              ? this.arrayEmployees.find((employee) => {
+                  return employee.Name === name;
+                }).Color
+              : tmpColors[this.rnd(0, this.colors.length - 1)],
+          details: appointmentData.details,
+          timed: true,
+        });
+      }
 
-      async deleteAppointment(){
+      this.events = events;
+    },
+    rnd(a, b) {
+      return Math.floor((b - a + 1) * Math.random()) + a;
+    },
 
-        console.log(this.selectedEvent)
-        console.log(this.selectedElement)
-        /*
+    async deleteAppointment() {
+      console.log(this.selectedEvent);
+      console.log(this.selectedElement);
+      /*
         try{
             let dateData = {
                 DateTime: this.date + this.hour,
@@ -269,22 +360,24 @@ import moment from "moment"
                 this.$router.push({name: "error", params:{error: error.response.data.state}});
             }
         }*/
-      },
-
-      async changeTokens(){
-        try{
-            let response = await auth.getNewPairOfTokens(this.$store.getters.getRefreshToken)
-
-            let accessToken = response.data.accessToken
-            let refreshToken = response.data.refreshToken
-
-            await this.$store
-                .dispatch("tokensChange", { accessToken, refreshToken })
-                .then(() => this.deleteAppointment());
-        } catch (error){
-            this.$store.dispatch("userLogout");
-        }
-      },
     },
-  }
+
+    async changeTokens() {
+      try {
+        let response = await auth.getNewPairOfTokens(
+          this.$store.getters.getRefreshToken
+        );
+
+        let accessToken = response.data.accessToken;
+        let refreshToken = response.data.refreshToken;
+
+        await this.$store
+          .dispatch("tokensChange", { accessToken, refreshToken })
+          .then(() => this.deleteAppointment());
+      } catch (error) {
+        this.$store.dispatch("userLogout");
+      }
+    },
+  },
+};
 </script>

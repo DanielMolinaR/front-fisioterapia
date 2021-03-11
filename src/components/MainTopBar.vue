@@ -1,16 +1,15 @@
 <template>
-  <v-container style="font-family: Economica">
+  <v-container style="font-family: Economica;">
     <v-app-bar color="#fafafa" fixed>
       <v-btn icon v-on="on" @click="$router.push('/home')">
         <v-icon color="#000000">mdi-home-outline</v-icon>
       </v-btn>
       <v-spacer />
-      <v-toolbar-title class="black--text"
-        style="font-size: 25px">
-        <v-img 
-          src= '../assets/images/logo-letras-en-linea.png'
-            max-width= "400px"
-            max-height="160px"
+      <v-toolbar-title class="black--text" style="font-size: 25px;">
+        <v-img
+          src="../assets/images/logo-letras-en-linea.png"
+          max-width="400px"
+          max-height="160px"
         ></v-img>
       </v-toolbar-title>
       <v-spacer />
@@ -23,21 +22,17 @@
 
 <script>
 export default {
-
   data() {
     return {
-      on: '',
-    }
+      on: "",
+    };
   },
 
   methods: {
     logOut() {
       this.$store.dispatch("userLogout");
     },
-    profile() {
-
-    }
+    profile() {},
   },
-
 };
 </script>

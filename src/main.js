@@ -4,10 +4,13 @@ import router from "./router";
 import store from "./store";
 import vuetify from "@/plugins/vuetify";
 import "./registerServiceWorker";
-import axios from "axios"
+import axios from "axios";
+import VuePwaInstallPlugin from "vue-pwa-install";
+
+Vue.use(VuePwaInstallPlugin);
 
 Vue.config.productionTip = false;
-Vue.use(axios)
+Vue.use(axios);
 
 new Vue({
   router,

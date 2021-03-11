@@ -35,15 +35,11 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <a href="/sign-up" class="text-decoration-none">Si aún no tienes una cuenta</a>
-              <v-spacer />
-              <v-btn
-                color="#2B2A29"
-                dark
-                rounded
-                @click="login"
-                value="login"
+              <a @click="pushToSignUp" class="text-decoration-none"
+                >Si aún no tienes una cuenta</a
               >
+              <v-spacer />
+              <v-btn color="#2B2A29" dark rounded @click="login" value="login">
                 <span v-if="!loading">Iniciar sesión</span>
               </v-btn>
             </v-card-actions>
@@ -86,25 +82,33 @@ export default {
         };
         let response = await auth.loginBack(userData);
         if (response.data.state == "Sesión iniciada") {
-            let token = response.data.accessToken;
-            let refreshToken = response.data.refreshToken;
-            let userName = response.data.userName;
-            let userLevel = response.data.role;
-            let email = response.data.email
-            await this.$store
-              .dispatch("userLogin", { userLevel, userName, token, refreshToken, email })
-              .then(() => this.$router.push("home"));
-          } else if (response.data.state == "Sesión iniciada gracias al token") {
-            this.$router.push("home");
-          } 
+          let token = response.data.accessToken;
+          let refreshToken = response.data.refreshToken;
+          let userName = response.data.userName;
+          let userLevel = response.data.role;
+          let email = response.data.email;
+          await this.$store
+            .dispatch("userLogin", {
+              userLevel,
+              userName,
+              token,
+              refreshToken,
+              email,
+            })
+            .then(() => this.$router.push("home"));
+        } else if (response.data.state == "Sesión iniciada gracias al token") {
+          this.$router.push("home");
+        }
       } catch (error) {
-        this.msg = error.response.data.state
+        this.msg = error.response.data.state;
         this.loading = false;
         this.error = true;
       }
     },
+
+    pushToSignUp() {
+      this.$router.push("sign-up");
+    },
   },
 };
 </script>
-
-
