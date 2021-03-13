@@ -71,6 +71,18 @@ export default {
     .then((res) => res);
   },
 
+  layOff(data){
+    return axios
+    .patch(ENDPOINT_PATH + "/lay-off-employee", data)
+    .then((res) => res);
+  },
+
+  renew(data){
+    return axios
+    .patch(ENDPOINT_PATH + "/renew-employee", data)
+    .then((res) => res);
+  },
+
   updateClinicalBackground(data){
     return axios
     .patch(ENDPOINT_PATH + "/update-clinical-background", data)
@@ -86,7 +98,7 @@ export default {
   signUpEmployee(slug, data){
     axios.defaults.headers.common["Authorization"] = `Bearer ` + slug;
     return axios
-      .post(ENDPOINT_PATH, "/employee-signUp", data)
+      .post(ENDPOINT_PATH + "/employee-signUp", data)
       .then((res) => res);
   },
 

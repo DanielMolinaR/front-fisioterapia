@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <TopBar />
-    <signUpData />
+    <signUpData class="mt-16" />
   </v-container>
 </template>
 

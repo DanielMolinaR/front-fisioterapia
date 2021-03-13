@@ -32,7 +32,7 @@ export default {
   },
 
   beforeMount() {
-    if (this.$store.getters.getToken.length != 0){
+    if (this.$store.getters.getToken.length === 0){
       this.$store.dispatch("userLogout");
     }
   },

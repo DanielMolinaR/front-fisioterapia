@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="ma-16">
+  <v-card flat class="my-8 mt-16">
     <v-snackbar v-model="snackbar" absolute top right :color="this.color">
       <span>{{ answer }}</span>
       <v-icon dark>
@@ -225,6 +225,8 @@
 </template>
 
 <script>
+import auth from "../logic/Auth"
+
 export default {
   name: "EmployeeSignUpData",
 
@@ -241,6 +243,7 @@ export default {
     });
 
     return {
+      slug: this.$route.path.substring(10, this.$route.path.length),
       form: Object.assign({}, defaultForm),
       showPassword: false,
       showConfirmPassword: false,
@@ -264,7 +267,7 @@ export default {
         password: [
           (value) => (value || "").length > 0 || "Campo obligatorio.",
           (value) => {
-            const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+            const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/;
             return (
               pattern.test(value) ||
               "La contraseña debe contener al menos un número, un carácter especial, una letra en mayúscula y tener una longitud mayor de 8 caracteres."
@@ -304,6 +307,10 @@ export default {
     };
   },
 
+  beforeMount() {
+    console.log(this.slug)
+  },
+
   computed: {
     formIsValid() {
       return (
@@ -325,16 +332,32 @@ export default {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
-    submit() {
-      this.color = "success";
-      this.answer =
-        "Registro completado. Se ha enviado el correo de confirmación.";
-      this.snackbar = true;
-      console.log(this.form);
-      this.resetForm();
+    async submit() {
+      let data = {
+        data: {
+          DNI: this.form.dni,
+          Password: this.form.password,
+          Phone: this.form.phone,
+          Email: this.form.email,
+          Name: this.form.name,
+          Surname: this.form.surname,
+        },
+        Active: true,
+        Admin: false,
+      }
+      try {
+        let response = await auth.signUpEmployee(this.slug ,data)
+        this.color = "success";
+        this.answer = response.data.state;
+        this.snackbar = true;
+      } catch (error){
+        this.color = "red accent-2";
+        this.answer = error.response.data.state;
+        this.snackbar = true;
+      }
     },
     checkPassword() {
-      let pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+      let pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/;
       return pattern.test(this.form.password);
     },
     checkEmail() {

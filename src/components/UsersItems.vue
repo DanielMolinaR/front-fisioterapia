@@ -125,9 +125,14 @@
                 </v-row>
               </v-col>
               <v-col cols="12" md="4" lg="4" xl="4" sm="6">
-                <v-row align="center" justify="center">
-                  <v-btn color="red accent-2" :dark="true">
+                <v-row align="center" justify="center" v-if="this.$props.active">
+                  <v-btn color="red accent-2" :dark="true" @click="layOffEmployee">
                     Suspender trabajador
+                  </v-btn>
+                </v-row>
+                <v-row align="center" justify="center" v-if="!this.$props.active">
+                  <v-btn color="success" :dark="true" @click="renewEmployee">
+                    Renovar trabajador
                   </v-btn>
                 </v-row>
               </v-col>
@@ -200,7 +205,7 @@ export default {
         this.$router.go(0);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
-          await this.changeTokens();
+          await this.changeTokens(true);
         } else {
           this.$router.push({
             name: "error",
@@ -210,7 +215,47 @@ export default {
       }
     },
 
-    async changeTokens() {
+    async layOffEmployee(){
+      let data = {
+        DNI: this.$props.dni
+      }
+      try{
+        let response = await auth.layOff(data)
+        console.log(response)
+        this.$router.go(0);
+      } catch (error) {
+        if (error.response.data.state === "Token no valido") {
+          await this.changeTokens(false);
+        } else {
+          this.$router.push({
+            name: "error",
+            params: { error: error.response.data.state },
+          });
+        }
+      }
+    },
+
+    async renewEmployee(){
+      let data = {
+        DNI: this.$props.dni
+      }
+      try{
+        let response = await auth.renew(data)
+        console.log(response)
+        this.$router.go(0);
+      } catch (error) {
+        if (error.response.data.state === "Token no valido") {
+          await this.changeTokens(false);
+        } else {
+          this.$router.push({
+            name: "error",
+            params: { error: error.response.data.state },
+          });
+        }
+      }
+    },
+
+    async changeTokens(isUpgrade) {
       try {
         let response = await auth.getNewPairOfTokens(
           this.$store.getters.getRefreshToken
@@ -221,7 +266,7 @@ export default {
 
         await this.$store
           .dispatch("tokensChange", { accessToken, refreshToken })
-          .then(() => this.updateToAdmin());
+          .then(() => {if (isUpgrade){this.updateToAdmin()}else if (this.$props.active){this.layOffEmployee()}else{this.renew()}});
       } catch (error) {
         this.$store.dispatch("userLogout");
       }

@@ -363,17 +363,12 @@ export default {
         Birthdate: birthD,
       }
       try{
-        console.log("TRY")
-        console.log(this.form)
-        console.log(data)
-
         let response = await auth.signUpPatient(data)
         this.color = "success"
         this.answer = response.data.state
         this.snackbar = true
         this.resetForm()
       }catch (error){
-        console.log(error.response.data.state)
         this.color = "red accent-2";
         this.answer = error.response.data.state;
         this.snackbar = true

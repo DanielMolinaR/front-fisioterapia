@@ -353,7 +353,7 @@ export default {
       try {
         let response = await auth.updateClinicalBackground(data)
         this.snackbar= true
-        this.answer= response.data.State
+        this.answer= response.data.state
         this.color= "success"
 
       } catch (error) {
