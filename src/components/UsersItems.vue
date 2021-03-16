@@ -1,7 +1,7 @@
 <template>
-  <v-container class="mt-n6">
+  <v-container >
     <v-expansion-panels focusable>
-      <v-expansion-panel>
+      <v-expansion-panel class="mb-2">
         <v-expansion-panel-header>
           <v-row no-gutters align="center" justify="center">
             <v-col
@@ -28,7 +28,7 @@
               xl="4"
               sm="6"
             >
-              <v-row no-gutters style="width: 100%;">
+              <v-row no-gutters style="width: 100%;" class="mt-3 mb-2">
                 <v-row align="center" justify="center">
                   <v-col cols="8">
                     <span v-text="email" />
@@ -38,7 +38,7 @@
             </v-col>
             <v-col
               cols="12"
-              class="text--secondary my-n3"
+              class="text--secondary"
               md="4"
               lg="4"
               xl="4"
@@ -68,7 +68,7 @@
           </v-row>
         </v-expansion-panel-header>
         <div v-if="this.$props.condition === 'patients'">
-          <v-expansion-panel-content class="pt-1">
+          <v-expansion-panel-content class="mt-5 mb-2">
             <v-row align="center" justify="center">
               <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                 <v-row align="center" justify="center">
@@ -108,7 +108,7 @@
           </v-expansion-panel-content>
         </div>
         <div v-else-if="this.$props.condition === 'employees'">
-          <v-expansion-panel-content class="pt-1">
+          <v-expansion-panel-content class="mt-5 mb-2">
             <v-row align="center" justify="center">
               <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                 <v-row align="center" justify="center">

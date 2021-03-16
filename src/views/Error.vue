@@ -10,11 +10,12 @@
           style="margin-top: 10%;"
         >
           <v-card color="red accent-2" :dark="true" width="500px">
-            <h1 style="margin-left: 10px;">ERROR</h1>
+            <h1 class="ml-6 mt-4" style="margin-left: 16px;">ERROR</h1>
             <br />
             <v-container
-              style="margin-left: 16px; padding-right: 16px;"
-              v-text="this.route"
+            class="pr-10"
+              style="margin-left: 16px; margin-right: 16px;"
+              v-text="this.msg"
             >
             </v-container>
             <br />
@@ -38,6 +39,7 @@ export default {
   data() {
     return {
       route: "",
+      msg: "Ha habido algún problema al recuperar los datos del historial clínico"
     };
   },
 

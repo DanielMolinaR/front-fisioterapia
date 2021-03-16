@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <TopBar />
-    <Cards class="mt-6" />
+    <Cards class="mt-10" />
   </v-container>
 </template>
 

@@ -70,7 +70,6 @@
     <v-row>
       <v-col v-for="user in this.users" :key="user.name" cols="12">
         <Users
-          class="px-10"
           :condition="state"
           :name="user.name"
           :email="user.email"
