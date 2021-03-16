@@ -12,7 +12,7 @@
 
 <script>
 import TopBar from "../components/MainTopBar.vue";
-import Calendar from "../components/calendarComponent";
+import Calendar from "../components/CalendarComponent";
 import auth from "../logic/Auth";
 
 export default {

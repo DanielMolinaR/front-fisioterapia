@@ -192,7 +192,7 @@ import auth from "../logic/Auth";
 import moment from "moment";
 
 export default {
-  name: "calendarComponent",
+  name: "CalendarComponent",
 
   components: {
     CreateAppointment,
