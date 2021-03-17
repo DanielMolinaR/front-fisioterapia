@@ -68,7 +68,7 @@
           </v-row>
         </v-expansion-panel-header>
         <div v-if="this.$props.condition === 'patients'">
-          <v-expansion-panel-content class="mt-5 mb-2">
+          <v-expansion-panel-content>
             <v-row align="center" justify="center">
               <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                 <v-row align="center" justify="center">
@@ -81,7 +81,7 @@
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6" class="mt-5 mb-2">
                 <v-row align="center" justify="center">
                   <v-btn
                     color="#000000"
@@ -110,21 +110,21 @@
         <div v-else-if="this.$props.condition === 'employees'">
           <v-expansion-panel-content class="mt-5 mb-2">
             <v-row align="center" justify="center">
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6" class="mb-2 mt-2">
                 <v-row align="center" justify="center">
                   <v-btn color="#F5914D" :dark="true" @click="pushToCalendar">
                     Ver citas
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
-                <v-row align="center" justify="center" v-if="!this.$props.admin">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6" class="mb-2 mt-2" v-if="!this.$props.admin">
+                <v-row align="center" justify="center" >
                   <v-btn outlined color="#000000" :dark="true" @click="updateToAdmin">
                     Convertir a administrador
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6" class="mb-2 mt-2">
                 <v-row align="center" justify="center" v-if="this.$props.active">
                   <v-btn color="red accent-2" :dark="true" @click="layOffEmployee">
                     Suspender trabajador

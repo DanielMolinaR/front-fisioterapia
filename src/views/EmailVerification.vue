@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <TopBar />
     <v-row justify="center" align="center" class="mt-16">
       <v-col
         cols="12"
@@ -21,11 +22,22 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row justify="center" align="center">
+      <v-col
+        cols="6"
+        sm="6"
+        md="6"
+        align-self="center"
+      >
+        <a @click="$router.push('/')" class="d-flex justify-center">Volver al inicio de sesión</a>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import auth from "../logic/Auth"
+import TopBar from "../components/SimpleTopBar"
 
 export default {
   data() {
@@ -34,6 +46,10 @@ export default {
       color: "", //success y red accent-2
       msg: "",
     };
+  },
+
+  components: {
+    TopBar,
   },
 
   beforeMount() {

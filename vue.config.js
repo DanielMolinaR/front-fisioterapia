@@ -15,5 +15,8 @@ module.exports = {
     manifestOptions: {
       background_color: "#fffafa",
     },
+    iconPaths: {
+      favicon32: './src/assets/images/logo.png',
+   },
   },
 };

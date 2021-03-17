@@ -1,11 +1,15 @@
 <template>
-  <v-card flat class="ma-16">
-    <v-snackbar v-model="snackbar" absolute top right :color="this.color">
-      <span>{{ answer }}</span>
-      <v-icon dark>
-        mdi-checkbox-marked-circle
-      </v-icon>
-    </v-snackbar>
+  <v-card flat class="my-8 mt-16">
+    <v-dialog v-model="dialog" absolute top right max-width="500">
+      <v-card :color="this.color" dark>
+        <v-col class="d-flex justify-center justify-space-around">
+          <h2><span>{{ answer }}</span>
+          <v-icon dark class="ml-1">
+            {{ icon }}
+          </v-icon></h2>
+        </v-col>
+      </v-card>
+    </v-dialog>
     <v-form ref="form" @submit.prevent="submit">
       <v-container fluid>
         <v-row>
@@ -321,11 +325,12 @@ export default {
           },
         ],
       },
-      snackbar: false,
+      dialog: false,
       terms: false,
       defaultForm,
       answer: "",
       color: "",
+      icon: "",
     };
   },
 
@@ -365,13 +370,15 @@ export default {
       try{
         let response = await auth.signUpPatient(data)
         this.color = "success"
+        this.icon = "mdi-checkbox-marked-circle"
         this.answer = response.data.state
-        this.snackbar = true
+        this.dialog = true
         this.resetForm()
       }catch (error){
         this.color = "red accent-2";
+        this.icon = "mdi-cancel-octagon-outline"
         this.answer = error.response.data.state;
-        this.snackbar = true
+        this.dialog = true
         this.resetForm()
       }
     },
