@@ -70,7 +70,7 @@
         <div v-if="this.$props.condition === 'patients'">
           <v-expansion-panel-content>
             <v-row align="center" justify="center">
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6"  class="mb-2 mt-2">
                 <v-row align="center" justify="center">
                   <v-btn
                     color="#F5914D"
@@ -81,7 +81,7 @@
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6" class="mt-5 mb-2">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6"  class="mb-2 mt-2">
                 <v-row align="center" justify="center">
                   <v-btn
                     color="#000000"
@@ -93,7 +93,7 @@
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6"  class="mb-2 mt-2">
                 <v-row align="center" justify="center">
                   <v-btn
                     color="#0b0b0b"
