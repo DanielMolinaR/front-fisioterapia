@@ -35,8 +35,8 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <a @click="pushToSignUp" class="text-decoration-none"
-                >Si aún no tienes una cuenta</a
+              <a @click="pushToSignUp" class="text-decoration-none ml-2"
+                >Crea una cuenta</a
               >
               <v-spacer />
               <v-btn color="#2B2A29" dark rounded @click="login" value="login">
