@@ -45,7 +45,7 @@ export default {
     return {
       cards: [
         {
-          src: require("../assets/images/mis_citas5.jpg"),
+          src: require("../assets/images/mis_citas.jpg"),
           title: "MIS CITAS",
           color: "#F5914D",
           level: 0, // patient level
@@ -61,14 +61,14 @@ export default {
           info: "exercises",
         },
         {
-          src: require("../assets/images/calendario3.jpg"),
+          src: require("../assets/images/calendario.jpg"),
           title: "CALENDARIO",
           color: "#F5914D",
           level: 0,
           path: "calendar",
         },
         {
-          src: require("../assets/images/ver_pacientes1.jpg"),
+          src: require("../assets/images/ver_pacientes.jpg"),
           title: "VER PACIENTES",
           color: "#F5914D",
           level: 1, //employee level
