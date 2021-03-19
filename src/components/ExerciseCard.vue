@@ -81,6 +81,7 @@ export default {
     title: String,
     date: String,
     hour: String,
+    dateForDB: String,
     details: String,
   },
 
@@ -91,11 +92,9 @@ export default {
 
   methods: {
     async deleteExercise() {
-      console.log("entra");
-      console.log(this.date + this.hour);
       try {
         let dateData = {
-          DateTime: this.date + this.hour,
+          DateTime: this.dateForDB,
         };
         let response = await auth.deleteExercise(dateData);
         console.log(response);

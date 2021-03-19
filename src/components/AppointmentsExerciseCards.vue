@@ -30,6 +30,7 @@
           :title="card.title"
           :date="card.date"
           :hour="card.hour"
+          :dateForDB="card.dateForDB"
           :details="card.details"
         />
       </v-col>

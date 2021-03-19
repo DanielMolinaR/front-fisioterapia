@@ -90,8 +90,6 @@ export default {
 
   methods: {
     async deleteAppointment() {
-      console.log("entra");
-      console.log(this.date + this.hour);
       try {
         let dateData = {
           DateTime: this.dateForDB,
