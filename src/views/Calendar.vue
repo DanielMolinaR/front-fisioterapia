@@ -39,9 +39,7 @@ export default {
 
   async created() {
     await this.getCalendarData();
-    console.log("HA TERMINADO EL CREATED");
     this.key = true;
-    console.log(this.key);
   },
 
   methods: {
@@ -53,18 +51,13 @@ export default {
         } else if (this.userLevel >= 0 && this.userLevel < 2) {
           response = await auth.getCards("get-appointments");
         }
-        console.log(response);
         await this.saveAppointmentsData(response);
 
         if (this.userLevel === 0) {
           var exerciseResponse = await auth.getCards("get-exercises");
-          console.log(exerciseResponse);
           await this.saveExerciseData(exerciseResponse);
         }
-
-        console.log(this.eventsData);
       } catch (error) {
-        console.log(error.response);
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens();
         } else {
@@ -78,7 +71,6 @@ export default {
 
     async saveAppointmentsData(response) {
       for (let data in response.data.dataToShow) {
-        console.log("Bucle citas");
         var dataToShow = {
           title: String,
           date: String,
@@ -99,15 +91,11 @@ export default {
         const spRegionTime = new Date(date).toLocaleString("eu-SP", {
           timeZone: "GMT0",
         });
-        console.log(spRegionTime);
-        console.log("hola");
         dataToShow.date = spRegionTime.substring(0, spRegionTime.indexOf(" "));
         dataToShow.hour = spRegionTime.substring(
           spRegionTime.indexOf(" ") + 1,
           spRegionTime.length
         );
-
-        console.log(this.eventsData);
 
         if (this.userLevel === 0) {
           dataToShow.details =

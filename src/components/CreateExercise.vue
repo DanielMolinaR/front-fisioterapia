@@ -85,7 +85,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$props.email);
     this.form.email = this.$props.email;
   },
 
@@ -154,16 +153,13 @@ export default {
           Month: parseInt(this.form.date.substring(0, 2)),
           Year: parseInt(this.form.date.substring(6, 10)),
         };
-        console.log(exerciseData);
         let response = await auth.createExercise(exerciseData);
-        console.log(response);
 
         this.color = "success";
         this.answer = response.data.state;
         this.snackbar = true;
         this.resetForm();
       } catch (error) {
-        console.log(error.response);
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens();
         } else {

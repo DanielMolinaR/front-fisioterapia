@@ -148,17 +148,13 @@ export default {
     async getData() {
       try {
         let response = await auth.getCards("get-appointments");
-        console.log(response);
         await this.saveAppointmentsData(response);
 
         if (this.$store.getters.getUserLevel === 0) {
           let exerciseResponse = await auth.getCards("get-exercises");
-          console.log(exerciseResponse);
           await this.saveExerciseData(exerciseResponse);
         }
 
-        console.log(this.Acards);
-        console.log(this.Ecards);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens();
@@ -193,7 +189,6 @@ export default {
         );
 
         dataToShow.dateForDB = date.toISOString()
-        console.log(dataToShow.dateForDB)
 
         const spRegionTime = new Date(date).toLocaleString("eu-SP", {
           timeZone: "GMT0",
@@ -225,6 +220,9 @@ export default {
         const date = new Date(
           info.date.substring(0, 10) + " " + info.date.substring(11, 16)
         );
+
+        dataToShow.dateForDB = date.toISOString()
+
         const spRegionTime = new Date(date).toLocaleString("eu-SP", {
           timeZone: "GMT0",
         });

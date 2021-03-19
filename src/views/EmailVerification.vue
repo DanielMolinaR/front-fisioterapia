@@ -56,20 +56,13 @@ export default {
     this.sendVerification()
   },
 
-  mounted() {
-    console.log(this.$route.query.page)
-  },
-
   methods: {
     async sendVerification() {
       try {
-        console.log(this.slug)
         let response = await auth.verifyEmail(this.slug)
-        console.log(response)
         this.color = "success"
         this.msg = response.data.state
       } catch (error){
-        console.log(error.response)
         this.color = "red accent-2";
         this.msg = error.response.data.state;
       }

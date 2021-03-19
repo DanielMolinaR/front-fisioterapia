@@ -213,7 +213,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$props.email);
     this.form.patient_email = this.$props.email;
   },
 
@@ -245,7 +244,6 @@ export default {
           Year: parseInt(this.form.date.substring(6, 10)),
         };
         let response = await auth.createAppointment(appointmentData);
-        console.log(response);
 
         this.color = "success";
         this.answer = response.data.state;

@@ -135,22 +135,17 @@ export default {
       route = "get-all-patients";
     }
     await this.getUsersData(route);
-    console.log(this.users);
   },
 
   methods: {
     async getUsersData(route) {
       try {
         let response = await auth.getCards(route);
-
-        console.log(response);
-
         await this.saveData(response);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens(route);
         } else {
-          console.log(error.response.data.state);
           this.$router.push({
             name: "error",
             params: { error: error.response.data.state },

@@ -97,7 +97,6 @@ export default {
           DateTime: this.dateForDB,
         };
         let response = await auth.deleteExercise(dateData);
-        console.log(response);
         this.$router.go(0);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {

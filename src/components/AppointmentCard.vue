@@ -98,7 +98,6 @@ export default {
         console.log(response);
         this.$router.go(0);
       } catch (error) {
-        console.log(error.response);
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens();
         } else {

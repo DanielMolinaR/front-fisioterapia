@@ -276,22 +276,16 @@ export default {
     },
     updateRange() {
       const events = [];
-      console.log("entra en el update");
 
       var tmpColors = this.colors;
 
       for (let appoint in this.$props.eventsDataToIterate) {
-        console.log(this.$props.eventsDataToIterate);
-        console.log(appoint);
         let appointmentData = this.$props.eventsDataToIterate[appoint];
-        console.log(
-          "date: " + appointmentData.date + " " + appointmentData.hour
-        );
+
         let date = moment(
           appointmentData.date + " " + appointmentData.hour,
           "DD/MM/YYYY hh:mm:ss"
         );
-        console.log("Primera: " + date);
         let date2 = moment(
           appointmentData.date +
             " " +
@@ -299,11 +293,8 @@ export default {
             ":00:00",
           "DD/MM/YYYY hh:MM:ss"
         );
-        console.log("Segunda: " + date2);
         let first = new Date(date);
-        console.log("Inicio: " + first);
         let second = new Date(date);
-        console.log("Final: " + second.setHours(second.getHours() + 1));
 
         if (this.$props.user_level === 2) {
           var name = appointmentData.title.substring(
@@ -342,8 +333,6 @@ export default {
     },
 
     async deleteAppointment() {
-      console.log(this.selectedEvent);
-      console.log(this.selectedElement);
       this.$router.push({name: "appointments-exercise", params: {toSearch: "appointments"}});
     },
 

@@ -312,10 +312,6 @@ export default {
     };
   },
 
-  beforeMount() {
-    console.log(this.slug)
-  },
-
   computed: {
     formIsValid() {
       return (

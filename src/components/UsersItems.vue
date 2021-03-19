@@ -201,7 +201,6 @@ export default {
       }
       try{
         let response = await auth.updateToAdmin(data)
-        console.log(response)
         this.$router.go(0);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
