@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       route: "",
-      msg: "Ha habido algún problema al recuperar los datos del historial clínico"
+      msg: ""
     };
   },
 

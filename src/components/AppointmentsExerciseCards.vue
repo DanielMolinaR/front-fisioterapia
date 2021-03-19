@@ -52,6 +52,7 @@
           :title="card.title"
           :date="card.date"
           :hour="card.hour"
+          :dateForDB="card.dateForDB"
           :details="card.details"
         />
       </v-col>
@@ -174,6 +175,7 @@ export default {
         var dataToShow = {
           title: String,
           date: String,
+          dateForDB: String,
           hour: String,
           details: String,
         };
@@ -184,6 +186,8 @@ export default {
         } else if (this.user_level === 1 || this.user_level === 2) {
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name;
         }
+
+        dataToShow.dateForDB = info.date.substring(0, 10) + " " + info.date.substring(11, 16)
 
         const date = new Date(
           info.date.substring(0, 10) + " " + info.date.substring(11, 16)
