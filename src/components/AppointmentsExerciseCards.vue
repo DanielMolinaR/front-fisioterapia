@@ -188,12 +188,13 @@ export default {
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name;
         }
 
-        dataToShow.dateForDB = info.date
-        console.log(dataToShow.dateForDB)
-
         const date = new Date(
           info.date.substring(0, 10) + " " + info.date.substring(11, 16)
         );
+
+        dataToShow.dateForDB = date.toISOString()
+        console.log(dataToShow.dateForDB)
+
         const spRegionTime = new Date(date).toLocaleString("eu-SP", {
           timeZone: "GMT0",
         });
