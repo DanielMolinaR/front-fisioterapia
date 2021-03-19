@@ -344,22 +344,7 @@ export default {
     async deleteAppointment() {
       console.log(this.selectedEvent);
       console.log(this.selectedElement);
-      /*
-        try{
-            let dateData = {
-                DateTime: this.date + this.hour,
-            };
-            let response = await auth.deleteAppointment(dateData)
-            console.log(response)
-            this.$router.go(0)
-        } catch (error) {
-            console.log(error.response)
-            if (error.response.data.state === "Token no valido"){
-                await this.changeTokens()
-            } else {
-                this.$router.push({name: "error", params:{error: error.response.data.state}});
-            }
-        }*/
+      this.$router.push({name: "appointments-exercise", params: {toSearch: "appointments"}});
     },
 
     async changeTokens() {
