@@ -294,7 +294,7 @@ export default {
           "DD/MM/YYYY hh:MM:ss"
         );
         let first = new Date(date);
-        let second = new Date(date);
+        let second = new Date(date2);
 
         if (this.$props.user_level === 2) {
           var name = appointmentData.title.substring(
