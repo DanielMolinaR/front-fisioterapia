@@ -357,7 +357,6 @@ export default {
       this.$refs.form.reset();
     },
     async submit() {
-      let birthD = this.form.birthdate.substring(6, this.form.birthdate.length) + "-" + this.form.birthdate.substring(3, 5) + "-" + this.form.birthdate.substring(0, 2)
       let data = {
         data: {DNI: this.form.dni,
         Password: this.form.password,
@@ -365,7 +364,7 @@ export default {
         Email: this.form.email,
         Name: this.form.name,
         Surname: this.form.surname,},
-        Birthdate: birthD,
+        Birthdate: this.form.birthdate,
       }
       try{
         let response = await auth.signUpPatient(data)
