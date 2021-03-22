@@ -4,11 +4,12 @@
       <v-spacer />
       <v-toolbar-title class="black--text" style="font-size: 30px;">
         <a @click="$router.push('/')">
-        <v-img
-          src="../assets/images/logo-letras-en-linea.png"
-          max-width="400px"
-          max-height="160px"
-        ></v-img></a>
+          <v-img
+            src="../assets/images/logo-letras-en-linea.png"
+            max-width="400px"
+            max-height="160px"
+          ></v-img
+        ></a>
       </v-toolbar-title>
       <v-spacer />
     </v-app-bar>

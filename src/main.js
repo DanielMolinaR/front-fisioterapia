@@ -6,6 +6,8 @@ import vuetify from "@/plugins/vuetify";
 import "./registerServiceWorker";
 import axios from "axios";
 import VuePwaInstallPlugin from "vue-pwa-install";
+import "./registerServiceWorker";
+import "./registerServiceWorker";
 
 Vue.use(VuePwaInstallPlugin);
 

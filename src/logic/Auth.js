@@ -54,52 +54,51 @@ export default {
       .then((res) => res);
   },
 
-  verifyEmail(slug){
+  verifyEmail(slug) {
     axios.defaults.headers.common["Authorization"] = `Bearer ` + slug;
+    return axios.patch(ENDPOINT_PATH + "/verify-email").then((res) => res);
+  },
+
+  signUpPatient(data) {
     return axios
-      .patch(ENDPOINT_PATH + "/verify-email")
+      .post(ENDPOINT_PATH + "/patient-signUp", data)
       .then((res) => res);
   },
 
-  signUpPatient(data){
-    return axios.post(ENDPOINT_PATH + "/patient-signUp", data).then((res) => res);
-  },
-
-  updateToAdmin(data){
+  updateToAdmin(data) {
     return axios
-    .patch(ENDPOINT_PATH + "/update-employee-to-admin", data)
-    .then((res) => res);
+      .patch(ENDPOINT_PATH + "/update-employee-to-admin", data)
+      .then((res) => res);
   },
 
-  layOff(data){
+  layOff(data) {
     return axios
-    .patch(ENDPOINT_PATH + "/lay-off-employee", data)
-    .then((res) => res);
+      .patch(ENDPOINT_PATH + "/lay-off-employee", data)
+      .then((res) => res);
   },
 
-  renew(data){
+  renew(data) {
     return axios
-    .patch(ENDPOINT_PATH + "/renew-employee", data)
-    .then((res) => res);
+      .patch(ENDPOINT_PATH + "/renew-employee", data)
+      .then((res) => res);
   },
 
-  updateClinicalBackground(data){
+  updateClinicalBackground(data) {
     return axios
-    .patch(ENDPOINT_PATH + "/update-clinical-background", data)
-    .then((res) => res);
+      .patch(ENDPOINT_PATH + "/update-clinical-background", data)
+      .then((res) => res);
   },
 
-  sendUniqueUrlForEmployeeSignUp(data){
+  sendUniqueUrlForEmployeeSignUp(data) {
     return axios
       .post(ENDPOINT_PATH + "/generate-and-send-unique-URL", data)
       .then((res) => res);
   },
 
-  signUpEmployee(slug, data){
+  signUpEmployee(slug, data) {
     axios.defaults.headers.common["Authorization"] = `Bearer ` + slug;
     return axios
       .post(ENDPOINT_PATH + "/employee-signUp", data)
       .then((res) => res);
   },
-
 };

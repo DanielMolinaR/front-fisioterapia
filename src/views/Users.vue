@@ -75,8 +75,8 @@
           :email="user.email"
           :active="user.active"
           :admin="user.admin"
-          :dni = "user.dni"
-          :surname = "user.surname"
+          :dni="user.dni"
+          :surname="user.surname"
         />
       </v-col>
     </v-row>
@@ -109,7 +109,7 @@ export default {
   },
 
   beforeCreate() {
-    if (this.$store.getters.getToken.length === 0){
+    if (this.$store.getters.getToken.length === 0) {
       this.$store.dispatch("userLogout");
     }
   },
@@ -169,8 +169,8 @@ export default {
         dataToShow.email = data.Email;
         dataToShow.active = data.Active;
         dataToShow.admin = data.Admin;
-        dataToShow.dni = data.DNI
-        dataToShow.surname = data.Surname
+        dataToShow.dni = data.DNI;
+        dataToShow.surname = data.Surname;
         this.users.push(dataToShow);
       }
     },

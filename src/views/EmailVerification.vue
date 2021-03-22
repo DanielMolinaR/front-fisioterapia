@@ -23,21 +23,18 @@
       </v-col>
     </v-row>
     <v-row justify="center" align="center">
-      <v-col
-        cols="6"
-        sm="6"
-        md="6"
-        align-self="center"
-      >
-        <a @click="$router.push('/')" class="d-flex justify-center">Volver al inicio de sesión</a>
+      <v-col cols="6" sm="6" md="6" align-self="center">
+        <a @click="$router.push('/')" class="d-flex justify-center"
+          >Volver al inicio de sesión</a
+        >
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import auth from "../logic/Auth"
-import TopBar from "../components/SimpleTopBar"
+import auth from "../logic/Auth";
+import TopBar from "../components/SimpleTopBar";
 
 export default {
   data() {
@@ -53,16 +50,16 @@ export default {
   },
 
   beforeMount() {
-    this.sendVerification()
+    this.sendVerification();
   },
 
   methods: {
     async sendVerification() {
       try {
-        let response = await auth.verifyEmail(this.slug)
-        this.color = "success"
-        this.msg = response.data.state
-      } catch (error){
+        let response = await auth.verifyEmail(this.slug);
+        this.color = "success";
+        this.msg = response.data.state;
+      } catch (error) {
         this.color = "red accent-2";
         this.msg = error.response.data.state;
       }

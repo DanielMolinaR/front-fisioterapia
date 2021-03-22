@@ -333,7 +333,10 @@ export default {
     },
 
     async deleteAppointment() {
-      this.$router.push({name: "appointments-exercise", params: {toSearch: "appointments"}});
+      this.$router.push({
+        name: "appointments-exercise",
+        params: { toSearch: "appointments" },
+      });
     },
 
     async changeTokens() {

@@ -154,7 +154,6 @@ export default {
           let exerciseResponse = await auth.getCards("get-exercises");
           await this.saveExerciseData(exerciseResponse);
         }
-
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens();
@@ -188,7 +187,7 @@ export default {
           info.date.substring(0, 10) + " " + info.date.substring(11, 16)
         );
 
-        dataToShow.dateForDB = date.toISOString()
+        dataToShow.dateForDB = date.toISOString();
 
         const spRegionTime = new Date(date).toLocaleString("eu-SP", {
           timeZone: "GMT0",
@@ -221,7 +220,7 @@ export default {
           info.date.substring(0, 10) + " " + info.date.substring(11, 16)
         );
 
-        dataToShow.dateForDB = date.toISOString()
+        dataToShow.dateForDB = date.toISOString();
 
         const spRegionTime = new Date(date).toLocaleString("eu-SP", {
           timeZone: "GMT0",

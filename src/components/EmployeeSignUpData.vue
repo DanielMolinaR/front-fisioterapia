@@ -3,10 +3,12 @@
     <v-dialog v-model="dialog" absolute top right max-width="500">
       <v-card :color="this.color" dark>
         <v-col class="d-flex justify-center justify-space-around">
-          <h2><span>{{ answer }}</span>
-          <v-icon dark class="ml-1">
-            {{ icon }}
-          </v-icon></h2>
+          <h2>
+            <span>{{ answer }}</span>
+            <v-icon dark class="ml-1">
+              {{ icon }}
+            </v-icon>
+          </h2>
         </v-col>
       </v-card>
     </v-dialog>
@@ -229,7 +231,7 @@
 </template>
 
 <script>
-import auth from "../logic/Auth"
+import auth from "../logic/Auth";
 
 export default {
   name: "EmployeeSignUpData",
@@ -345,20 +347,20 @@ export default {
         },
         Active: true,
         Admin: false,
-      }
+      };
       try {
-        let response = await auth.signUpEmployee(this.slug ,data)
+        let response = await auth.signUpEmployee(this.slug, data);
         this.color = "success";
-        this.icon = "mdi-checkbox-marked-circle"
+        this.icon = "mdi-checkbox-marked-circle";
         this.answer = response.data.state;
         this.dialog = true;
-        this.resetForm()
-      } catch (error){
+        this.resetForm();
+      } catch (error) {
         this.color = "red accent-2";
-        this.icon = "mdi-cancel-octagon-outline"
+        this.icon = "mdi-cancel-octagon-outline";
         this.answer = error.response.data.state;
         this.dialog = true;
-        this.resetForm()
+        this.resetForm();
       }
     },
     checkPassword() {

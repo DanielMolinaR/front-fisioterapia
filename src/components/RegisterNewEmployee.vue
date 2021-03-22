@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import auth from "../logic/Auth"
+import auth from "../logic/Auth";
 
 export default {
   name: "patientSignUpData",
@@ -91,10 +91,10 @@ export default {
     async submit() {
       let data = {
         Name: this.form.name,
-        Email: this.form.physio_email
-      }
-      try{
-        let response = await auth.sendUniqueUrlForEmployeeSignUp(data)
+        Email: this.form.physio_email,
+      };
+      try {
+        let response = await auth.sendUniqueUrlForEmployeeSignUp(data);
         this.color = "success";
         this.answer = response.data.state;
         this.snackbar = true;

@@ -13,7 +13,7 @@
             <h1 class="ml-6 mt-4" style="margin-left: 16px;">ERROR</h1>
             <br />
             <v-container
-            class="pr-10"
+              class="pr-10"
               style="margin-left: 16px; margin-right: 16px;"
               v-text="this.msg"
             >
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       route: "",
-      msg: ""
+      msg: "",
     };
   },
 

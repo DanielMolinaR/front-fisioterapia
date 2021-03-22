@@ -3,10 +3,12 @@
     <v-dialog v-model="dialog" absolute top right max-width="500">
       <v-card :color="this.color" dark>
         <v-col class="d-flex justify-center justify-space-around">
-          <h2><span>{{ answer }}</span>
-          <v-icon dark class="ml-1">
-            {{ icon }}
-          </v-icon></h2>
+          <h2>
+            <span>{{ answer }}</span>
+            <v-icon dark class="ml-1">
+              {{ icon }}
+            </v-icon>
+          </h2>
         </v-col>
       </v-card>
     </v-dialog>
@@ -238,7 +240,7 @@
 
 <script>
 import DatePicker from "../components/BirthDayPicker";
-import auth from "../logic/Auth"
+import auth from "../logic/Auth";
 
 export default {
   name: "PatientSignUpData",
@@ -358,27 +360,29 @@ export default {
     },
     async submit() {
       let data = {
-        data: {DNI: this.form.dni,
-        Password: this.form.password,
-        Phone: this.form.phone,
-        Email: this.form.email,
-        Name: this.form.name,
-        Surname: this.form.surname,},
+        data: {
+          DNI: this.form.dni,
+          Password: this.form.password,
+          Phone: this.form.phone,
+          Email: this.form.email,
+          Name: this.form.name,
+          Surname: this.form.surname,
+        },
         Birthdate: this.form.birthdate,
-      }
-      try{
-        let response = await auth.signUpPatient(data)
-        this.color = "success"
-        this.icon = "mdi-checkbox-marked-circle"
-        this.answer = response.data.state
-        this.dialog = true
-        this.resetForm()
-      }catch (error){
+      };
+      try {
+        let response = await auth.signUpPatient(data);
+        this.color = "success";
+        this.icon = "mdi-checkbox-marked-circle";
+        this.answer = response.data.state;
+        this.dialog = true;
+        this.resetForm();
+      } catch (error) {
         this.color = "red accent-2";
-        this.icon = "mdi-cancel-octagon-outline"
+        this.icon = "mdi-cancel-octagon-outline";
         this.answer = error.response.data.state;
-        this.dialog = true
-        this.resetForm()
+        this.dialog = true;
+        this.resetForm();
       }
     },
     checkPassword() {

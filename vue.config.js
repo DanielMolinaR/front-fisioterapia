@@ -16,7 +16,7 @@ module.exports = {
       background_color: "#fffafa",
     },
     iconPaths: {
-      favicon32: './src/assets/images/logo.png',
-   },
+      favicon32: "./src/assets/images/logo.png",
+    },
   },
 };

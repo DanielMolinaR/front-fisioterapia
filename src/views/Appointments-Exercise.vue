@@ -26,7 +26,7 @@ export default {
   },
 
   async beforeMount() {
-    if (this.$store.getters.getToken.length === 0){
+    if (this.$store.getters.getToken.length === 0) {
       this.$store.dispatch("userLogout");
     }
     if (Object.keys(this.$route.params).length !== 0) {

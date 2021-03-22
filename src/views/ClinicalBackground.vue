@@ -153,9 +153,7 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4" sm="12">
-
-            </v-col>      
+            <v-col cols="12" md="4" sm="12"> </v-col>
             <v-col cols="12" md="4" sm="12">
               <v-text-field
                 v-model="form.yellow_flags"
@@ -212,8 +210,13 @@
             </v-col>
           </v-row>
           <v-card-actions class="mr-2">
-            <v-spacer/><v-spacer></v-spacer>
-            <v-btn dark color="#F5914D" type="submit" @click="updateClinicalBackground">
+            <v-spacer /><v-spacer></v-spacer>
+            <v-btn
+              dark
+              color="#F5914D"
+              type="submit"
+              @click="updateClinicalBackground"
+            >
               Actualizar cambios
             </v-btn>
           </v-card-actions>
@@ -268,7 +271,7 @@ export default {
   },
 
   async beforeMount() {
-      if (this.$store.getters.getToken.length === 0){
+    if (this.$store.getters.getToken.length === 0) {
       this.$store.dispatch("userLogout");
     }
     if (this.email.length !== 0) {
@@ -285,29 +288,28 @@ export default {
 
         let response = await auth.getClinicalBackground(data);
 
-        this.form.dni = response.data.Data.Patient_dni
-        this.form.reason = response.data.Data.Reason
-        this.form.mq_antecedentes = response.data.Data.Anamnesis.Mq_antecedentes
-        this.form.f_antecedentes = response.data.Data.Anamnesis.F_antecedentes
-        this.form.f_treatments = response.data.Data.Anamnesis.F_treatments
-        this.form.m_treatments = response.data.Data.Anamnesis.M_treatments
-        this.form.exercise = response.data.Data.Anamnesis.Habits.Exercise
-        this.form.activities = response.data.Data.Anamnesis.Habits.Activities
-        this.form.sleep = response.data.Data.Anamnesis.Habits.Sleep
-        this.form.nutrition = response.data.Data.Anamnesis.Habits.Nutrition
-        this.form.observation = response.data.Data.Exploration.Observation
-        this.form.pain_details = response.data.Data.Exploration.Pain_details
-        this.form.range = response.data.Data.Exploration.Range
-        this.form.daniels = response.data.Data.Exploration.Daniels
-        this.form.deficits = response.data.Data.Exploration.Deficits
-        this.form.yellow_flags = response.data.Data.Yellow_flags
-        this.form.diagnosis = response.data.Data.Diagnosis
-        this.form.p_objectives = response.data.Data.P_objectives
-        this.form.t_objectives = response.data.Data.T_objectives
-        this.form.treatment = response.data.Data.Treatment
-        this.form.progression = response.data.Data.Progression
-        
-
+        this.form.dni = response.data.Data.Patient_dni;
+        this.form.reason = response.data.Data.Reason;
+        this.form.mq_antecedentes =
+          response.data.Data.Anamnesis.Mq_antecedentes;
+        this.form.f_antecedentes = response.data.Data.Anamnesis.F_antecedentes;
+        this.form.f_treatments = response.data.Data.Anamnesis.F_treatments;
+        this.form.m_treatments = response.data.Data.Anamnesis.M_treatments;
+        this.form.exercise = response.data.Data.Anamnesis.Habits.Exercise;
+        this.form.activities = response.data.Data.Anamnesis.Habits.Activities;
+        this.form.sleep = response.data.Data.Anamnesis.Habits.Sleep;
+        this.form.nutrition = response.data.Data.Anamnesis.Habits.Nutrition;
+        this.form.observation = response.data.Data.Exploration.Observation;
+        this.form.pain_details = response.data.Data.Exploration.Pain_details;
+        this.form.range = response.data.Data.Exploration.Range;
+        this.form.daniels = response.data.Data.Exploration.Daniels;
+        this.form.deficits = response.data.Data.Exploration.Deficits;
+        this.form.yellow_flags = response.data.Data.Yellow_flags;
+        this.form.diagnosis = response.data.Data.Diagnosis;
+        this.form.p_objectives = response.data.Data.P_objectives;
+        this.form.t_objectives = response.data.Data.T_objectives;
+        this.form.treatment = response.data.Data.Treatment;
+        this.form.progression = response.data.Data.Progression;
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens(true);
@@ -320,7 +322,7 @@ export default {
       }
     },
 
-    async updateClinicalBackground(){
+    async updateClinicalBackground() {
       let data = {
         Patient_dni: this.form.dni,
         Reason: this.form.reason,
@@ -334,7 +336,7 @@ export default {
             Activities: this.form.activities,
             Sleep: this.form.sleep,
             Nutrition: this.form.nutrition,
-          }
+          },
         },
         Exploration: {
           Observation: this.form.observation,
@@ -348,21 +350,20 @@ export default {
         P_objectives: this.form.p_objectives,
         T_objectives: this.form.t_objectives,
         Treatment: this.form.treatment,
-        Progression: this.form.progression
-      }
+        Progression: this.form.progression,
+      };
       try {
-        let response = await auth.updateClinicalBackground(data)
-        this.snackbar= true
-        this.answer= response.data.state
-        this.color= "success"
-
+        let response = await auth.updateClinicalBackground(data);
+        this.snackbar = true;
+        this.answer = response.data.state;
+        this.color = "success";
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
           await this.changeTokens(false);
         } else {
-          this.snackbar= true
-          this.answer= error.response.data.state
-          this.color= "red accent-2"
+          this.snackbar = true;
+          this.answer = error.response.data.state;
+          this.color = "red accent-2";
         }
       }
     },
@@ -378,7 +379,13 @@ export default {
 
         await this.$store
           .dispatch("tokensChange", { accessToken, refreshToken })
-          .then(() => {if (isGetData){ this.getData()} else {this.updateClinicalBackground()}});
+          .then(() => {
+            if (isGetData) {
+              this.getData();
+            } else {
+              this.updateClinicalBackground();
+            }
+          });
       } catch (error) {
         this.$store.dispatch("userLogout");
       }

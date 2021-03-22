@@ -1,5 +1,5 @@
 <template>
-  <v-container >
+  <v-container>
     <v-expansion-panels focusable>
       <v-expansion-panel>
         <v-expansion-panel-header>
@@ -70,7 +70,7 @@
         <div v-if="this.$props.condition === 'patients'" class="mt-1 mb-n1">
           <v-expansion-panel-content>
             <v-row align="center" justify="center">
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6" >
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                 <v-row align="center" justify="center">
                   <v-btn
                     color="#F5914D"
@@ -93,7 +93,7 @@
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6" >
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                 <v-row align="center" justify="center">
                   <v-btn
                     color="#0b0b0b"
@@ -107,30 +107,57 @@
             </v-row>
           </v-expansion-panel-content>
         </div>
-        <div v-else-if="this.$props.condition === 'employees'" class="mt-1 mb-n1">
+        <div
+          v-else-if="this.$props.condition === 'employees'"
+          class="mt-1 mb-n1"
+        >
           <v-expansion-panel-content>
             <v-row align="center" justify="center">
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6" >
+              <v-col cols="12" md="4" lg="4" xl="4" sm="6">
                 <v-row align="center" justify="center">
                   <v-btn color="#F5914D" :dark="true" @click="pushToCalendar">
                     Ver citas
                   </v-btn>
                 </v-row>
               </v-col>
-              <v-col cols="12" md="4" lg="4" xl="4" sm="6" v-if="!this.$props.admin">
-                <v-row align="center" justify="center" >
-                  <v-btn outlined color="#000000" :dark="true" @click="updateToAdmin">
+              <v-col
+                cols="12"
+                md="4"
+                lg="4"
+                xl="4"
+                sm="6"
+                v-if="!this.$props.admin"
+              >
+                <v-row align="center" justify="center">
+                  <v-btn
+                    outlined
+                    color="#000000"
+                    :dark="true"
+                    @click="updateToAdmin"
+                  >
                     Convertir a administrador
                   </v-btn>
                 </v-row>
               </v-col>
               <v-col cols="12" md="4" lg="4" xl="4" sm="6">
-                <v-row align="center" justify="center" v-if="this.$props.active">
-                  <v-btn color="red accent-2" :dark="true" @click="layOffEmployee">
+                <v-row
+                  align="center"
+                  justify="center"
+                  v-if="this.$props.active"
+                >
+                  <v-btn
+                    color="red accent-2"
+                    :dark="true"
+                    @click="layOffEmployee"
+                  >
                     Suspender trabajador
                   </v-btn>
                 </v-row>
-                <v-row align="center" justify="center" v-if="!this.$props.active">
+                <v-row
+                  align="center"
+                  justify="center"
+                  v-if="!this.$props.active"
+                >
                   <v-btn color="success" :dark="true" @click="renewEmployee">
                     Renovar trabajador
                   </v-btn>
@@ -159,7 +186,7 @@
 <script>
 import CreateAppointment from "../components/CreateAppointment";
 import CreateExercise from "../components/CreateExercise";
-import auth from "../logic/Auth"
+import auth from "../logic/Auth";
 
 export default {
   props: {
@@ -195,13 +222,13 @@ export default {
       });
     },
 
-    async updateToAdmin(){
+    async updateToAdmin() {
       let data = {
-        DNI: this.$props.dni
-      }
-      try{
-        let response = await auth.updateToAdmin(data)
-        console.log(response.data.state)
+        DNI: this.$props.dni,
+      };
+      try {
+        let response = await auth.updateToAdmin(data);
+        console.log(response.data.state);
         this.$router.go(0);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
@@ -215,13 +242,13 @@ export default {
       }
     },
 
-    async layOffEmployee(){
+    async layOffEmployee() {
       let data = {
-        DNI: this.$props.dni
-      }
-      try{
-        let response = await auth.layOff(data)
-        console.log(response)
+        DNI: this.$props.dni,
+      };
+      try {
+        let response = await auth.layOff(data);
+        console.log(response);
         this.$router.go(0);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
@@ -235,13 +262,13 @@ export default {
       }
     },
 
-    async renewEmployee(){
+    async renewEmployee() {
       let data = {
-        DNI: this.$props.dni
-      }
-      try{
-        let response = await auth.renew(data)
-        console.log(response)
+        DNI: this.$props.dni,
+      };
+      try {
+        let response = await auth.renew(data);
+        console.log(response);
         this.$router.go(0);
       } catch (error) {
         if (error.response.data.state === "Token no valido") {
@@ -266,12 +293,19 @@ export default {
 
         await this.$store
           .dispatch("tokensChange", { accessToken, refreshToken })
-          .then(() => {if (isUpgrade){this.updateToAdmin()}else if (this.$props.active){this.layOffEmployee()}else{this.renew()}});
+          .then(() => {
+            if (isUpgrade) {
+              this.updateToAdmin();
+            } else if (this.$props.active) {
+              this.layOffEmployee();
+            } else {
+              this.renew();
+            }
+          });
       } catch (error) {
         this.$store.dispatch("userLogout");
       }
     },
-
   },
 };
 </script>
