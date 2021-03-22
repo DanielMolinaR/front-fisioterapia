@@ -8,7 +8,6 @@
 
 <script>
 import { BeforeInstallPromptEvent } from "vue-pwa-install";
-
 export default {
   name: "App",
   
@@ -35,7 +34,6 @@ export default {
   src: local("Economica"),
     url(./fonts/Economica/Economica-Regular.ttf) format("truetype");
 }
-
 #app {
   background-color: var(--v-background-base);
 }
