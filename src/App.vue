@@ -10,7 +10,7 @@
 import { BeforeInstallPromptEvent } from "vue-pwa-install";
 export default {
   name: "App",
-
+  
   data() {
     return {
       deferredPrompt: BeforeInstallPromptEvent,
