@@ -1,18 +1,6 @@
-//import { register } from "register-service-worker";
+import { register } from "register-service-worker";
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-          .then(reg => {
-              console.log('Registration succeeded. Scope is ' + reg.scope);
-          })
-          .catch(registrationError => {
-              console.log('SW registration failed: ', registrationError);
-          });
-  });
-}
-
-/*if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
       // console.log("Service worker is active.");
@@ -48,4 +36,4 @@ if ('serviceWorker' in navigator) {
       // console.error("Error during service worker registration:", error);
     },
   });
-}*/
+}
