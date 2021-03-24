@@ -283,16 +283,20 @@ export default {
         let appointmentData = this.$props.eventsDataToIterate[appoint];
 
         let date = moment(
-          appointmentData.date + " " + appointmentData.hour,
+          appointmentData.date.substring(8,appointmentData.date.length) 
+          + appointmentData.date.substring(4,8) + appointmentData.date.substring(0,4) +
+          " " + appointmentData.hour,
           "DD/MM/YYYY hh:mm:ss"
         );
         let date2 = moment(
-          appointmentData.date +
-            " " +
+          appointmentData.date.substring(8,appointmentData.date.length) 
+          + appointmentData.date.substring(4,8) + appointmentData.date.substring(0,4) +
+          " " +
             (parseInt(appointmentData.hour.substring(0, 2)) + 1) +
-            ":00:00",
-          "DD/MM/YYYY hh:MM:ss"
+            ":00",
+          "DD/MM/YYYY hh:mm:ss"
         );
+
         let first = new Date(date);
         let second = new Date(date2);
 

@@ -85,17 +85,8 @@ export default {
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name;
         }
 
-        const date = new Date(
-          info.date.substring(0, 10) + " " + info.date.substring(11, 16)
-        );
-        const spRegionTime = new Date(date).toLocaleString("eu-SP", {
-          timeZone: "GMT0",
-        });
-        dataToShow.date = spRegionTime.substring(0, spRegionTime.indexOf(" "));
-        dataToShow.hour = spRegionTime.substring(
-          spRegionTime.indexOf(" ") + 1,
-          spRegionTime.length
-        );
+        dataToShow.date = info.date.substring(0, 10)
+        dataToShow.hour = info.date.substring(11, 16)
 
         if (this.userLevel === 0) {
           dataToShow.details =
@@ -128,18 +119,9 @@ export default {
         let info = response.data.dataToShow[data];
 
         dataToShow.title = "EJERCICIO - " + info.Name;
-        const date = new Date(
-          info.date.substring(0, 10) + " " + info.date.substring(11, 16)
-        );
-        const spRegionTime = new Date(date).toLocaleString("eu-SP", {
-          timeZone: "GMT0",
-        });
 
-        dataToShow.date = spRegionTime.substring(0, spRegionTime.indexOf(" "));
-        dataToShow.hour = spRegionTime.substring(
-          spRegionTime.indexOf(" ") + 1,
-          spRegionTime.length
-        );
+        dataToShow.date = info.date.substring(0, 10)
+        dataToShow.hour = info.date.substring(11, 16)
         dataToShow.details = info.Description;
 
         this.eventsData.push(dataToShow);

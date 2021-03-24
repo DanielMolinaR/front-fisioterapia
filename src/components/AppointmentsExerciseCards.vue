@@ -183,21 +183,10 @@ export default {
           dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name;
         }
 
-        const date = new Date(
-          info.date.substring(0, 10) + " " + info.date.substring(11, 16)
-        );
+        dataToShow.dateForDB = info.date.substring(0, 10) + " " + info.date.substring(11, 16);
 
-        dataToShow.dateForDB = date.toISOString();
-
-        const spRegionTime = new Date(date).toLocaleString("eu-SP", {
-          timeZone: "GMT0",
-        });
-
-        dataToShow.date = spRegionTime.substring(0, spRegionTime.indexOf(" "));
-        dataToShow.hour = spRegionTime.substring(
-          spRegionTime.indexOf(" "),
-          spRegionTime.length - 3
-        );
+        dataToShow.date = info.date.substring(0, 10);
+        dataToShow.hour = info.date.substring(11, 16)
         dataToShow.details = "Cita en la clinica FORTIA calle San Juan";
 
         this.Acards.push(dataToShow);
@@ -216,21 +205,10 @@ export default {
 
         dataToShow.title = "EJERCICIO - " + info.Name;
 
-        const date = new Date(
-          info.date.substring(0, 10) + " " + info.date.substring(11, 16)
-        );
+        dataToShow.dateForDB = info.date.substring(0, 10) + " " + info.date.substring(11, 16);
 
-        dataToShow.dateForDB = date.toISOString();
-
-        const spRegionTime = new Date(date).toLocaleString("eu-SP", {
-          timeZone: "GMT0",
-        });
-
-        dataToShow.date = spRegionTime.substring(0, spRegionTime.indexOf(" "));
-        dataToShow.hour = spRegionTime.substring(
-          spRegionTime.indexOf(" "),
-          spRegionTime.length - 3
-        );
+        dataToShow.date = info.date.substring(0, 10);
+        dataToShow.hour = info.date.substring(11, 16)
         dataToShow.details = info.Description;
 
         this.Ecards.push(dataToShow);
