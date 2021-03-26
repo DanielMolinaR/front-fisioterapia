@@ -302,8 +302,8 @@ export default {
 
         if (this.$props.user_level === 2) {
           var name = appointmentData.title.substring(
-            20,
-            appointmentData.title.length
+            0,
+            appointmentData.title.length - 20
           );
           if (
             !this.arrayEmployees.some((employee) => employee["Name"] === name)
