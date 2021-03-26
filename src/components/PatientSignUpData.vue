@@ -219,8 +219,7 @@
           fotocopia del DNI o equivalente. En el caso de representación, deberá
           probarse mediante las formas admitidas en Derecho.
           <br />El procedimiento para el ejercicio de derechos se encuentra
-          publicado en la página web de Protección de Datos
-          (https://www.uah.es/protecciondedatos - PROCEDIMIENTOS). <br />En todo
+          publicado en la página web de Protección de Datos. <br />En todo
           caso, si los titulares no estuvieran de acuerdo con la respuesta
           ofrecida, podrán presentar una reclamación ante la Agencia Española de
           Protección de Datos. <br />9.- ¿Se realizan transferencias
@@ -289,7 +288,7 @@ export default {
             const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/;
             return (
               pattern.test(value) ||
-              "La contraseña debe contener al menos un número, un carácter especial, una letra en mayúscula y tener una longitud mayor de 8 caracteres."
+              "La contraseña debe contener al menos un número, un carácter especial, una letra en mayúscula, una letra minúscula y tener una longitud mayor de 8 caracteres."
             );
           },
         ],

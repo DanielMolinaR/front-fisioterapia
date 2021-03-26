@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ENDPOINT_PATH = "https://clinica-fortia.herokuapp.com";
+const ENDPOINT_PATH = "https://clinica-fortia.herokuapp.com"
 
 export default {
   loginBack(userData) {

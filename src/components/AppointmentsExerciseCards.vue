@@ -178,9 +178,9 @@ export default {
         let info = response.data.dataToShow[data];
 
         if (this.user_level === 0) {
-          dataToShow.title = "CITA FISIOTERAPIA - " + info.Employee_name;
+          dataToShow.title = info.Employee_name + " - CITA FISIOTERAPIA";
         } else if (this.user_level === 1 || this.user_level === 2) {
-          dataToShow.title = "CITA FISIOTERAPIA - " + info.Patient_name;
+          dataToShow.title = info.Patient_name+ " - CITA FISIOTERAPIA";
         }
 
         dataToShow.dateForDB = info.date.substring(0, 10) + " " + info.date.substring(11, 16);
@@ -203,7 +203,7 @@ export default {
         };
         let info = response.data.dataToShow[data];
 
-        dataToShow.title = "EJERCICIO - " + info.Name;
+        dataToShow.title = info.Name + " - EJERCICIO";
 
         dataToShow.dateForDB = info.date.substring(0, 10) + " " + info.date.substring(11, 16);
 

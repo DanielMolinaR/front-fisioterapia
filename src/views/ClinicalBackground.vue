@@ -13,9 +13,9 @@
           <v-row>
             <v-col cols="12" md="4" sm="12">
               <v-text-field
-                v-model="form.dni"
+                v-model="form.name"
                 color="#F5914D"
-                label="DNI del paciente "
+                label="Nombre del paciente "
                 required
                 outlined
                 readonly
@@ -239,7 +239,7 @@ export default {
 
   data() {
     const defaultForm = Object.freeze({
-      dni: "",
+      name: "",
       reason: "",
       mq_antecedentes: "",
       f_antecedentes: "",
@@ -263,14 +263,22 @@ export default {
     });
     return {
       form: Object.assign({}, defaultForm),
-      email: this.$route.params.email,
+      email: "",
       snackbar: false,
       answer: "",
       color: "",
+      dni: "",
     };
   },
 
   async beforeMount() {
+    let param = this.$route.params.email; 
+    console.log(param)
+    if (param){
+      await this.$store.dispatch("changeParam", { param });
+    }
+    console.log(this.$store.getters.getParam)
+    this.email = await this.$store.getters.getParam;
     if (this.$store.getters.getToken.length === 0) {
       this.$store.dispatch("userLogout");
     }
@@ -278,6 +286,7 @@ export default {
       this.getData();
     }
   },
+
 
   methods: {
     async getData() {
@@ -287,8 +296,9 @@ export default {
         };
 
         let response = await auth.getClinicalBackground(data);
-
-        this.form.dni = response.data.Data.Patient_dni;
+        console.log(response)
+        this.form.name = response.data.Name;
+        this.dni = response.data.Data.Patient_dni
         this.form.reason = response.data.Data.Reason;
         this.form.mq_antecedentes =
           response.data.Data.Anamnesis.Mq_antecedentes;
@@ -324,7 +334,7 @@ export default {
 
     async updateClinicalBackground() {
       let data = {
-        Patient_dni: this.form.dni,
+        Patient_dni: this.dni,
         Reason: this.form.reason,
         Anamnesis: {
           Mq_antecedentes: this.form.mq_antecedentes,
