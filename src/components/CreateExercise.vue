@@ -76,7 +76,10 @@ export default {
   name: "createExercise",
 
   props: {
-    email: String,
+    email: {
+      type: String,
+      default: ''
+    }
   },
 
   components: {

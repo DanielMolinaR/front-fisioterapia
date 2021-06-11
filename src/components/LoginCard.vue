@@ -27,7 +27,7 @@
                   name="password"
                   v-model="password"
                   :type="showPassword ? 'text' : 'password'"
-                  color="##B2A29"
+                  color="#2B2A29"
                   @click:append="showPassword = !showPassword"
                   v-on:keyup.enter="login"
                   flat
