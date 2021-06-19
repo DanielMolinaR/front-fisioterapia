@@ -50,7 +50,7 @@
                   <v-col cols="8">
                     <span v-text="'Estado: '" />
                     <div
-                      v-if="this.$props.admin"
+                      v-if="this.$props.admin && this.$props.active"
                       class="rounded-circle pa-2 blue lighten-3 rounded-circle d-inline-block"
                     ></div>
                     <div
@@ -58,7 +58,7 @@
                       class="rounded-circle pa-2 green accent-3 rounded-circle d-inline-block"
                     ></div>
                     <div
-                      v-if="!this.$props.admin && !this.$props.active"
+                      v-if="!this.$props.active"
                       class="rounded-circle pa-2 red accent-3 rounded-circle d-inline-block"
                     ></div>
                   </v-col>
@@ -126,7 +126,7 @@
                 lg="4"
                 xl="4"
                 sm="6"
-                v-if="!this.$props.admin"
+                v-if="!this.$props.admin && this.$props.active"
               >
                 <v-row align="center" justify="center">
                   <v-btn
