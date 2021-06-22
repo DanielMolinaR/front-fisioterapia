@@ -60,7 +60,7 @@
                   class="mr-2"
                   color="green accent-2"
                   :dark="true"
-                  @click="deleteAppointment"
+                  @click="deleteExercise"
                 >
                   SÍ
                 </v-btn>
